@@ -67,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         login_btn = (Button) findViewById(R.id.login_btn);
         user_mobile = (EditText) findViewById(R.id.user_mobile_no);
         mpin = (EditText) findViewById(R.id.user_pass);
+        brain_info_call=(TextView)findViewById(R.id.info_phone);
+        brain_info_info=(TextView)findViewById(R.id.info_info);
         checkBox = (CheckBox) findViewById(R.id.check_remember);
        /* loaded_number =checkpref.getString("user_number", "");*/
         checkBoxValue = checkpref.getBoolean("CheckBox_Value",false );
