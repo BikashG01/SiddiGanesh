@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh.data_model;
+package com.infobrain.siddiganesh.data_model;
 
 /**
  * Created by bikas on 12/4/2017.

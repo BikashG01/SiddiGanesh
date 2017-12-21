@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh.adapters;
+package com.infobrain.siddiganesh.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 
-import com.infobrain.sidiganesh.R;
-import com.infobrain.sidiganesh.data_model.UserDepositDataModel;
+import com.infobrain.siddiganesh.R;
+import com.infobrain.siddiganesh.data_model.UserDepositDataModel;
 
 import java.util.List;
 
@@ -57,8 +57,8 @@ public class UserDepositAdapter extends BaseAdapter {
             view = minflator.inflate(R.layout.deposit_list_holder, null);
             mViewholder = new DepositViewHolder();
             mViewholder.account_type = (TextView) view.findViewById(R.id.deposit_account_type);
-            mViewholder.account_number = (TextView) view.findViewById(R.id.deposit_account_number);
-            mViewholder.account_total_amount = (TextView) view.findViewById(R.id.deposit_account_balance_total);
+            mViewholder.account_number = (TextView) view.findViewById(R.id.statement_ref);
+            mViewholder.account_total_amount = (TextView) view.findViewById(R.id.statement_blc);
             view.setTag(mViewholder);
         } else {
             mViewholder = (DepositViewHolder) view.getTag();

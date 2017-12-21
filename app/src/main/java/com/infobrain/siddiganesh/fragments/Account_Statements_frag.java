@@ -1,10 +1,11 @@
-package com.infobrain.sidiganesh.fragments;
+package com.infobrain.siddiganesh.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -29,9 +30,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.infobrain.sidiganesh.R;
-import com.infobrain.sidiganesh.adapters.Statment_adapter;
-import com.infobrain.sidiganesh.data_model.Statment_data_model;
+import com.infobrain.siddiganesh.R;
+import com.infobrain.siddiganesh.adapters.Statment_adapter;
+import com.infobrain.siddiganesh.data_model.Statment_data_model;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,21 +44,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 
 public class Account_Statements_frag extends Fragment {
     private Button show_statement;
     private LinearLayout linearLayout_stat_list;
-    private Spinner statment_type_spin;
-    private String statement_value;
+    private Spinner statment_type_spin,account_type_spin;
+    private String statement_value,acc_no;
     private ListView statement_list_view;
-    private String date[] = {"2017/09/07", "2017/09/07", "2017/09/07", "2017/09/07"};
-    private String ref[] = {"367348", "893403403", "82939", "8938493"};
-    private String trans_blc[] = {"100", "100", "100", "100"};
-    private String total_blc[] = {"2000", "2000", "900", "4894"};
-    private String status[] = {"withdraw", "deposit", "withdraw", "deposit"};
     private ArrayList statment_value_list = new ArrayList();
     private String SHOWS_URL;
     private List<Statment_data_model> statment_data_models = new ArrayList<>();
@@ -67,7 +62,12 @@ public class Account_Statements_frag extends Fragment {
     private Calendar calendar1, calendar2;
     private String fromDate, toDate = "0";
     private TextView from_date, to_date;
+    private List<String> account_no_lists;
+    private String account_name;
     private SimpleDateFormat sdf;
+    private String user_number;
+    private String user_mpin;
+    private SharedPreferences preferences;
 
     private ArrayAdapter<CharSequence> statement_adapater;
 
@@ -76,6 +76,8 @@ public class Account_Statements_frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         statment_type_spin = (Spinner) view.findViewById(R.id.statement_type);
+        account_type_spin=(Spinner)view.findViewById(R.id.account_spin);
+        account_no_lists = new ArrayList<>();
         statement_list_view = (ListView) view.findViewById(R.id.list_statement);
         show_statement = (Button) view.findViewById(R.id.show_statement_btn);
         linearLayout_stat_list = (LinearLayout) view.findViewById(R.id.list_layout);
@@ -86,6 +88,11 @@ public class Account_Statements_frag extends Fragment {
         statement_adapater = ArrayAdapter.createFromResource(getContext(), R.array.statement, android.R.layout.simple_spinner_item);
         statement_adapater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statment_type_spin.setAdapter(statement_adapater);
+
+        preferences = getActivity().getSharedPreferences("LOGIN", 0);
+        user_number = preferences.getString("user_number", "");
+        user_mpin = preferences.getString("user_mpin", "");
+        spinner_load();
 
 
         Date currentDate = new Date();
@@ -160,6 +167,9 @@ public class Account_Statements_frag extends Fragment {
             }
         });
 
+
+
+
         statment_type_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -170,6 +180,20 @@ public class Account_Statements_frag extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+        account_type_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                acc_no = account_type_spin.getItemAtPosition(i).toString();
+
+                Toast.makeText(getContext(), acc_no, Toast.LENGTH_SHORT).show();
+
+                ((TextView) account_type_spin.getSelectedView()).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
 
@@ -255,6 +279,8 @@ public class Account_Statements_frag extends Fragment {
     }
 
 
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -313,5 +339,47 @@ public class Account_Statements_frag extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(90000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
+    }
+
+    public void spinner_load() {
+        final String login_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Validate_UserLogin?Mobile_No=" + user_number + "&MPin=" + user_mpin;
+        final StringRequest stringRequest2 = new StringRequest(Request.Method.GET, login_url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                try {
+
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array1 = jsonObject.getJSONArray("Table2");
+                    JSONObject contain = array1.getJSONObject(0);
+
+                    for (int i = 0; i < array1.length(); i++) {
+                        JSONObject object = array1.getJSONObject(i);
+                        String acc_nos = object.getString("AC_NO");
+                        account_no_lists.add(acc_nos);
+                        //account_no_lists.add(acc_nos);
+
+                    }
+                    account_type_spin.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item, account_no_lists));
+
+
+                } catch (JSONException e) {
+                    Log.e("ERROR:", e.getMessage());
+
+
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest2);
+
+
     }
 }

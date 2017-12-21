@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh;
+package com.infobrain.siddiganesh;
 
 import org.junit.Test;
 

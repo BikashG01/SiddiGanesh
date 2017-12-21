@@ -1,8 +1,7 @@
-package com.infobrain.sidiganesh.fragments;
+package com.infobrain.siddiganesh.fragments;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -33,26 +32,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.infobrain.sidiganesh.R;
-import com.infobrain.sidiganesh.adapters.UserDepositAdapter;
-import com.infobrain.sidiganesh.data_model.UserDepositDataModel;
-import com.infobrain.sidiganesh.adapters.UserLoanAdapter;
-import com.infobrain.sidiganesh.data_model.UserLoanDataModel;
+import com.infobrain.siddiganesh.R;
+import com.infobrain.siddiganesh.adapters.UserDepositAdapter;
+import com.infobrain.siddiganesh.data_model.UserDepositDataModel;
+import com.infobrain.siddiganesh.adapters.UserLoanAdapter;
+import com.infobrain.siddiganesh.data_model.UserLoanDataModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.app.Activity.RESULT_OK;
-import static android.content.Context.MODE_PRIVATE;
 
 public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     ListView deposit;

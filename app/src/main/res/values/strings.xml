@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SiddiGanesh</string>
+
+    <string name="FCM_PREF">com.infobrain.siddiganesh.firebasepush.fcm_pref</string>
+    <string name="FCM_TOKEN">com.infobrain.siddiganesh.firebasepush.fcm_token</string>
+
     <string name="title_activity_siddhi__nav__drawer">Siddhi_Nav_Drawer</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -55,7 +59,7 @@
     <string name="normal_savings">Normal Saving</string>
     <string name="Account_no">Account No.:&#160;</string>
     <string name="powered_by">Powered By:&#160;Info Brain Solution Pvt.Ltd</string>
-    <string name="balance">Balance</string>
+    <string name="balance">Balance&#160;</string>
     <string name="amount">Amount</string>
     <string name="frm_date">From Date:</string>
     <string name="to_date">To Date:</string>
@@ -69,7 +73,7 @@
     <string name="remember_login">Remember Mobile</string>
 
     <string name="account_type">Account Type</string>
-    <string name="npr">NPR. </string>
+    <string name="npr">NPR.&#160;</string>
    
     <string name="product_name">Product Name:</string>
     <string name="opening_date">Opening Date:</string>

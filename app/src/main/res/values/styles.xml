@@ -9,9 +9,10 @@
     </style>
 
     <style name="spinner_style">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/spinner_layout</item>
+        <!--<style name="MySpinnerLook" parent="@android:TextAppearance.Widget.TextView.SpinnerItem">
+            <item name="android:textSize">22sp</item>
+        </style>-->
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
     <!--Notitilebar theme-->

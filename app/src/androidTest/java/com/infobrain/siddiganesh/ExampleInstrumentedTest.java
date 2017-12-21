@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh;
+package com.infobrain.siddiganesh;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

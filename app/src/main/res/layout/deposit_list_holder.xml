@@ -24,7 +24,7 @@
             />
         
         <TextView
-            android:id="@+id/deposit_account_no"
+            android:id="@+id/ref"
             android:layout_below="@+id/deposit_account_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,9 +32,9 @@
             android:textColor="@color/textwhite"
             />
         <TextView
-            android:id="@+id/deposit_account_number"
+            android:id="@+id/statement_ref"
             android:layout_below="@+id/deposit_account_type"
-            android:layout_toRightOf="@id/deposit_account_no"
+            android:layout_toRightOf="@id/ref"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/acc_no"
@@ -51,17 +51,17 @@
             android:textColor="@color/textwhite"
             />
         <TextView
-            android:id="@+id/rs"
+            android:id="@+id/npr"
             android:layout_below="@+id/deposit_account_balance_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/deposit_account_balance_total"
+            android:layout_toLeftOf="@id/statement_blc"
             android:text="NPR. "
             android:textColor="@color/textwhite"
             />
 
         <TextView
-            android:id="@+id/deposit_account_balance_total"
+            android:id="@+id/statement_blc"
             android:layout_below="@+id/deposit_account_balance_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

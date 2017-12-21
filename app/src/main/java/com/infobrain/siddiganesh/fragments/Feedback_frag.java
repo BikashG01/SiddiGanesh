@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh.fragments;
+package com.infobrain.siddiganesh.fragments;
 
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -22,7 +22,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.infobrain.sidiganesh.R;
+import com.infobrain.siddiganesh.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

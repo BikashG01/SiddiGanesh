@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh.activities;
+package com.infobrain.siddiganesh.activities;
 
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -24,21 +23,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.infobrain.sidiganesh.R;
-import com.infobrain.sidiganesh.fragments.About_us_frag;
-import com.infobrain.sidiganesh.fragments.Account_Statements_frag;
-import com.infobrain.sidiganesh.fragments.Account_info_frag;
-import com.infobrain.sidiganesh.fragments.Alert_message_frag;
-import com.infobrain.sidiganesh.fragments.Change_password_frag;
-import com.infobrain.sidiganesh.fragments.DashBoard_frag;
-import com.infobrain.sidiganesh.fragments.Feedback_frag;
-
-import org.w3c.dom.Text;
+import com.infobrain.siddiganesh.R;
+import com.infobrain.siddiganesh.fragments.About_us_frag;
+import com.infobrain.siddiganesh.fragments.Account_Statements_frag;
+import com.infobrain.siddiganesh.fragments.Account_info_frag;
+import com.infobrain.siddiganesh.fragments.Alert_message_frag;
+import com.infobrain.siddiganesh.fragments.Change_password_frag;
+import com.infobrain.siddiganesh.fragments.DashBoard_frag;
+import com.infobrain.siddiganesh.fragments.Feedback_frag;
 
 public class Siddhi_Nav_Drawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

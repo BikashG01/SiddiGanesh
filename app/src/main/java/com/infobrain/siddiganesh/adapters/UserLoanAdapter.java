@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh.adapters;
+package com.infobrain.siddiganesh.adapters;
 
 import android.app.Activity;
 import android.content.Context;
@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.infobrain.sidiganesh.R;
-import com.infobrain.sidiganesh.data_model.UserLoanDataModel;
+import com.infobrain.siddiganesh.R;
+import com.infobrain.siddiganesh.data_model.UserLoanDataModel;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.infobrain.sidiganesh.fragments;
+package com.infobrain.siddiganesh.fragments;
 
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -7,18 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.infobrain.sidiganesh.R;
+import com.infobrain.siddiganesh.R;
 
 /**
  * Created by bikas on 12/3/2017.
  */
 
-public class Alert_message_frag extends Fragment {
+public class About_us_frag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View some = inflater.inflate(R.layout.alert_message_frag, container, false);
-        getActivity().setTitle("Alert Message");
+        View some = inflater.inflate(R.layout.about_us_frag, container, false);
+        getActivity().setTitle("About Us");
         return some;
     }
 }

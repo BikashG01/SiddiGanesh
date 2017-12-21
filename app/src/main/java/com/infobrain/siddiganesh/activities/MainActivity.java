@@ -1,14 +1,13 @@
-package com.infobrain.sidiganesh.activities;
+package com.infobrain.siddiganesh.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -23,8 +22,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.infobrain.sidiganesh.Networks_files.Network_connection;
-import com.infobrain.sidiganesh.R;
+import com.infobrain.siddiganesh.Networks_files.Network_connection;
+import com.infobrain.siddiganesh.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,13 +31,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-    private SharedPreferences preferences, checkpref;
+    private SharedPreferences sharedPreferences,preferences, checkpref;
     private Button login_btn;
     private ProgressDialog progressDialog;
     private TextView brain_info_call, brain_info_info;
@@ -51,7 +48,9 @@ public class MainActivity extends AppCompatActivity {
     private String account_type;
     private String list_value, only_acc_no;
     private String loaded_number;
-    private boolean checkBoxValue;
+    private Boolean checkBoxValue;
+    private String state = "1";
+    private String push_url;
 
     private List<String> account_no_list = new ArrayList<>();
     private List<String> account_nos_only = new ArrayList<>();
@@ -61,15 +60,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
+        push_url = "http://www.lifespassenger.com/siddhiganesh/fcm_insert.php";
         preferences = getSharedPreferences("LOGIN", 0);
         checkpref = getSharedPreferences("CHECK", 0);
         login_btn = (Button) findViewById(R.id.login_btn);
         user_mobile = (EditText) findViewById(R.id.user_mobile_no);
         mpin = (EditText) findViewById(R.id.user_pass);
         checkBox = (CheckBox) findViewById(R.id.check_remember);
-        loaded_number = preferences.getString("user_number", "");
-        checkBoxValue = checkpref.getBoolean("CheckBox_Value", false);
+       /* loaded_number =checkpref.getString("user_number", "");*/
+        checkBoxValue = checkpref.getBoolean("CheckBox_Value",false );
+        loaded_number=preferences.getString("user_number","");
+        /*Log.e("Checkbox",checkBoxValue);
+        if (checkBoxValue.equals("1")) {
+            loadNumber();
+        }else {
+            user_mobile.setText("");
+        }*/
         loadNumber(checkBoxValue);
+
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 } else {
 
                     load_data();
-
+                    push_device_token();
                 }
             }
 
@@ -114,15 +122,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadNumber(boolean value) {
-        if (checkBox.isChecked()) {
+        if (checkBox.isChecked()){
             loaded_number = preferences.getString("userLogin", "");
+        }
+        else{
             user_mobile.setText(loaded_number);
-        } else {
-            user_mobile.setText("");
         }
 
     }
 
+    public void push_device_token() {
+
+        sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.FCM_PREF), Context.MODE_PRIVATE);
+        final String token = sharedPreferences.getString(getString(R.string.FCM_TOKEN), "");
+
+        final String user_phone = user_number;
+        Log.e("This is Token", token);
+        Log.e("This is Phone Number", user_phone);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, push_url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        })
+
+
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("user_phone", user_phone);
+                params.put("user_fcm_token", token);
+                Log.e("Params ", token);
+                return params;
+            }
+        };
+        Network_connection.getInstance(MainActivity.this).addToRequestque(stringRequest);
+    }
 
     public void load_data() {
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, login_url, new Response.Listener<String>() {

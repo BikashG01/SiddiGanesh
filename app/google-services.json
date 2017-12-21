@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "490255436272",
+    "firebase_url": "https://siddiganesh-1b028.firebaseio.com",
+    "project_id": "siddiganesh-1b028",
+    "storage_bucket": "siddiganesh-1b028.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490255436272:android:1ec1595ccc44cc8f",
+        "android_client_info": {
+          "package_name": "com.infobrain.siddiganesh"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490255436272-c5c611h82qb81rti22guedqua9oc1k9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCihfkM-VBTmxZeQ5pNxVpCZz7XtjwQTzk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
