@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     private String loaded_number;
     private Boolean checkBoxValue;
     private String state = "1";
+    private String boolbool;
     private String push_url;
 
     private List<String> account_no_list = new ArrayList<>();
