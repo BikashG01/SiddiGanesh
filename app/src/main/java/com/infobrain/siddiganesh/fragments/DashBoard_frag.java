@@ -53,6 +53,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
     ListView deposit;
     ListView loan;
     ImageView user_profile_pic;
+    private String lol;
     private ProgressDialog progressDialog;
     Bitmap bitmap;
     SharedPreferences sharedPreferences, preferences, userpref;
