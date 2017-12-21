@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -43,6 +44,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 
 
 public class Account_Statements_frag extends Fragment {
@@ -63,7 +65,7 @@ public class Account_Statements_frag extends Fragment {
     private int year, month, day;
     private int fyear, fmonth, fday;
     private Calendar calendar1, calendar2;
-    private String fromDate, toDate,olddate;
+    private String fromDate, toDate = "0";
     private TextView from_date, to_date;
     private SimpleDateFormat sdf;
 
@@ -84,10 +86,44 @@ public class Account_Statements_frag extends Fragment {
         statement_adapater = ArrayAdapter.createFromResource(getContext(), R.array.statement, android.R.layout.simple_spinner_item);
         statement_adapater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statment_type_spin.setAdapter(statement_adapater);
+
+
+        Date currentDate = new Date();
+
+        calendar1 = Calendar.getInstance();
+        year = calendar1.get(Calendar.YEAR);
+        month = calendar1.get(Calendar.MONTH);
+        day = calendar1.get(Calendar.DAY_OF_MONTH);
+        toDate = year + "-" + new StringBuilder().append(month + 1) + "-" + day;
+        to_date.setText(toDate);
+        Log.e("AJA KO DATE", toDate);
+        calendar2 = Calendar.getInstance();
+        fyear = calendar1.get(Calendar.YEAR);
+
+
+        //calendar2 = Calendar.getInstance();
+        calendar2.setTime(currentDate);
+        //fyear = calendar2.get(Calendar.YEAR);
+        //fmonth = calendar2.get(Calendar.MONTH);
+        //fday=calendar2.get(Calendar.DAY_OF_MONTH);
+        calendar2.add(Calendar.DAY_OF_MONTH, -35);
+        Date addDate = calendar2.getTime();
+
+        //olddate = fyear + "-" + new StringBuilder().append(fmonth+1) + "-" + fday;
+        fromDate = dateFormat.format(addDate);
+        String split = "-";
+        String[] parts = fromDate.split(split);
+        fyear = Integer.parseInt(parts[0]);
+        fmonth = Integer.parseInt(parts[1]) - 1;
+        fday = Integer.parseInt(parts[2]);
+        from_date.setText(dateFormat.format(addDate));
+        Log.e("SELECT NAHUDA KO DATE", fromDate);
+
+
         to_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDatePickerDialog();
+                ToDateDatePicker();
 
             }
         });
@@ -100,13 +136,26 @@ public class Account_Statements_frag extends Fragment {
         show_statement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                linearLayout_stat_list.setVisibility(View.VISIBLE);
-                statment_data_models.clear();
-                load_statements();
-                //statement_list_view = (ListView) view.findViewById(R.id.list_statement);
-                statment_adapters = new Statment_adapter(statment_data_models, getContext());
-                statement_list_view.setAdapter(statment_adapters);
-                statment_adapters.notifyDataSetChanged();
+                int dateDifference = (int) getDateDiff(new SimpleDateFormat("yyyy-MM-dd"), fromDate, toDate);
+                Math.abs(dateDifference);
+                Log.e("DATE DIFFERENCE", Integer.toString(dateDifference));
+                Log.e("FROMDATE", fromDate);
+                Log.e("TODATE", toDate);
+                //System.out.println("dateDifference: " + dateDifference);
+
+                if (dateDifference > 35) {
+                    Toast.makeText(getContext(), "Please select less than 35 days", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    linearLayout_stat_list.setVisibility(View.VISIBLE);
+                    statment_data_models.clear();
+                    load_statements();
+                    //statement_list_view = (ListView) view.findViewById(R.id.list_statement);
+                    statment_adapters = new Statment_adapter(statment_data_models, getContext());
+                    statement_list_view.setAdapter(statment_adapters);
+                    statment_adapters.notifyDataSetChanged();
+                }
+
 
             }
         });
@@ -123,27 +172,7 @@ public class Account_Statements_frag extends Fragment {
 
             }
         });
-        Date currentDate= new Date();
 
-        calendar1 = Calendar.getInstance();
-        year = calendar1.get(Calendar.YEAR);
-        month = calendar1.get(Calendar.MONTH);
-        day = calendar1.get(Calendar.DAY_OF_MONTH);
-        toDate = year + "-" + new StringBuilder().append(month+1) + "-" + day;
-        to_date.setText(toDate);
-        Log.e("AJA KO DATE", toDate);
-        calendar2=Calendar.getInstance();
-        fyear = calendar1.get(Calendar.YEAR);
-
-
-        calendar2 = Calendar.getInstance();
-        calendar2.setTime(currentDate);
-        fyear = calendar2.get(Calendar.YEAR);
-        fmonth = calendar2.get(Calendar.MONTH);
-        calendar2.add(Calendar.DAY_OF_MONTH,-35);
-        Date addDate=calendar2.getTime();
-        //olddate = fyear + "-" + new StringBuilder().append(fmonth+1) + "-" + fday;
-        from_date.setText(dateFormat.format(addDate));
         //Log.e("ADD DATE", addDate);
     }
 
@@ -159,9 +188,9 @@ public class Account_Statements_frag extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
-            dialog.getDatePicker().setMinDate(calendar2.getTimeInMillis());
-            dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, fyear, fmonth, fday);
+            //dialog.getDatePicker().setMinDate(calendar2.getTimeInMillis());
+            //dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             return dialog;
         }
 
@@ -169,8 +198,9 @@ public class Account_Statements_frag extends Fragment {
             fyear = yy;
             fmonth = mm;
             fday = dd;
-            toDate = fyear + "-" + new StringBuilder().append(fmonth+1) + "-" + fday;
-            from_date.setText(toDate);
+            fromDate = fyear + "-" + new StringBuilder().append(fmonth + 1) + "-" + fday;
+            Log.e("FROM SELECT GARDA", fromDate);
+            from_date.setText(fromDate);
             /*from_date.setText(new StringBuilder().append(month + 1)
                     .append("-").append(day).append("-").append(year)
                     .append(" "));*/
@@ -179,11 +209,21 @@ public class Account_Statements_frag extends Fragment {
 
     }
 
+    public static long getDateDiff(SimpleDateFormat format, String oldDate, String newDate) {
+
+        try {
+            return TimeUnit.DAYS.convert(format.parse(newDate).getTime() - format.parse(oldDate).getTime(), TimeUnit.MILLISECONDS);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("Difference Date", e.getMessage());
+            return 0;
+        }
+    }
 
 
-    public void showDatePickerDialog() {
-        DialogFragment dialogFragment = new SelectDateFragments();
-        dialogFragment.show(getActivity().getFragmentManager(), "Khai");
+    public void ToDateDatePicker() {
+        DialogFragment dialogFragments = new SelectDateFragments();
+        dialogFragments.show(getActivity().getFragmentManager(), "Khai");
     }
 
 
@@ -193,18 +233,19 @@ public class Account_Statements_frag extends Fragment {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+            DatePickerDialog dialogs = new DatePickerDialog(getActivity(), this, year, month, day);
             //dialog.getDatePicker().setMinDate(calendar1.getTimeInMillis());
-            dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
-            return dialog;
+            //dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+            return dialogs;
         }
 
         public void onDateSet(DatePicker view, int yy, int mm, int dd) {
             year = yy;
             month = mm;
             day = dd;
-            fromDate = year + "-" + new StringBuilder().append(month+1) + "-" + day;
-            to_date.setText(fromDate);
+            toDate = year + "-" + new StringBuilder().append(month + 1) + "-" + day;
+            Log.e("TO SELECT GARDA", toDate);
+            to_date.setText(toDate);
             /*from_date.setText(new StringBuilder().append(month + 1)
                     .append("-").append(day).append("-").append(year)
                     .append(" "));*/
@@ -212,7 +253,6 @@ public class Account_Statements_frag extends Fragment {
 
 
     }
-
 
 
     @Nullable

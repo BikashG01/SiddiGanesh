@@ -1,144 +1,144 @@
-<android.support.v4.widget.SwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:id="@+id/swipe_refresh_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    android:background="@drawable/background_blur"
-    android:fillViewport="true">
-
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:background="@drawable/background_blur"
+        android:fillViewport="true">
 
         <LinearLayout
-            android:id="@+id/show_user"
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:orientation="horizontal"
-            android:background="@drawable/custom_boarder"
-            android:padding="10dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ProfileImage"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="?android:selectableItemBackground"
-                android:src="@drawable/user_profile"
-                android:layout_gravity="center_horizontal|center_vertical"
-                />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
             <LinearLayout
+                android:id="@+id/show_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_gravity="center_horizontal|center_vertical">
-                <TextView
-                    android:id="@+id/user_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="@string/customer_name"
-                    android:textColor="#ffffff"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
+                android:layout_margin="15dp"
+                android:background="@drawable/custom_boarder"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-                <TextView
-                    android:id="@+id/user_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ProfileImage"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:background="?android:selectableItemBackground"
+                    android:src="@drawable/user_profile" />
 
-                    android:paddingLeft="10dp"
-                    android:text="@string/customer_phn_no"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/user_location"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingLeft="10dp"
-                    android:text="@string/customer_Address"
-                    android:textColor="#ffffff"
-                    android:textSize="12sp" />
+                    android:layout_gravity="center_horizontal|center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="@string/customer_name"
+                        android:textColor="#ffffff"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/user_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+
+                        android:paddingLeft="10dp"
+                        android:text="@string/customer_phn_no"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/user_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="10dp"
+                        android:text="@string/customer_Address"
+                        android:textColor="#ffffff"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/deposit_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
+                android:layout_marginLeft="15dp"
+                android:paddingBottom="1dp"
+                android:text="@string/deposit_acc"
+                android:textColor="#F7E812"
+                android:textSize="32px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/show_user_line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+
+                android:layout_marginStart="15dp"
+                android:background="#F7E812"
+                android:text="DEPOSIT ACCOUNTS"
+                android:textSize="32px"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/list_item_deposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="5dp" />
+
+            <TextView
+                android:id="@+id/loan_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_marginLeft="15dp"
+                android:text="@string/loan_acc"
+                android:textColor="#F7E812"
+                android:textSize="32px"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/loan_header_line"
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_marginStart="15dp"
+                android:background="#F7E812"
+                android:paddingTop="5dp"
+                android:text="LOAN ACCOUNTS"
+                android:textSize="32px"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/list_item_loan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="5dp" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/deposit_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
 
-            android:layout_marginLeft="15dp"
-            android:paddingBottom="1dp"
-            android:text="@string/deposit_acc"
-            android:textColor="#F7E812"
-            android:textSize="32px"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/show_user_line"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-
-            android:layout_marginStart="15dp"
-            android:background="#F7E812"
-            android:text="DEPOSIT ACCOUNTS"
-            android:textSize="32px"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@+id/list_item_deposit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="@android:color/transparent"
-            android:layout_margin="15dp"
-            android:dividerHeight="5dp" />
-
-        <TextView
-            android:id="@+id/loan_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:layout_marginLeft="15dp"
-            android:text="@string/loan_acc"
-            android:textColor="#F7E812"
-            android:textSize="32px"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/loan_header_line"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_marginStart="15dp"
-            android:background="#F7E812"
-            android:paddingTop="5dp"
-            android:text="LOAN ACCOUNTS"
-            android:textSize="32px"
-            android:textStyle="bold" />
-
-        <ListView
-            android:id="@+id/list_item_loan"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="5dp" />
-
-    </LinearLayout>
-
-
-
-</ScrollView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>
 
 

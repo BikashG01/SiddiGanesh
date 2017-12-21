@@ -54,13 +54,13 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static android.content.Context.MODE_PRIVATE;
 
-public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
+public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     ListView deposit;
     ListView loan;
     ImageView user_profile_pic;
     private ProgressDialog progressDialog;
     Bitmap bitmap;
-    SharedPreferences sharedPreferences, preferences,userpref;
+    SharedPreferences sharedPreferences, preferences, userpref;
     String encodedImage;
     static final int REQUEST_CODE_TO_BROWSE_IMAGE = 1;
     public String dashboard_getUserInfo_URL;
@@ -72,6 +72,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
     String username, userphone, useraddress;
     String userPhoneNo, userMpin;
     SwipeRefreshLayout swiper;
+    private LinearLayout linearLayout;
 
     public UserDepositAdapter depositAdapter;
     public UserLoanAdapter loanAdapter;
@@ -85,6 +86,8 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
+        linearLayout=(LinearLayout)view.findViewById(R.id.main_layout);
+        linearLayout.setVisibility(View.INVISIBLE);
 
         user_name = view.findViewById(R.id.user_name);
         user_phone = view.findViewById(R.id.user_phone);
@@ -93,7 +96,6 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         userpref = getActivity().getSharedPreferences("INFO", 0);
         userPhoneNo = preferences.getString("user_number", "");
         userMpin = preferences.getString("user_mpin", "");
-
         getUserInfo(userPhoneNo, userMpin);
         getDepositList(userPhoneNo, userMpin);
         getLoanList(userPhoneNo, userMpin);
@@ -102,19 +104,10 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         depositAdapter = new UserDepositAdapter(dashboard_deposit_array_list, getContext());
         deposit.setAdapter(depositAdapter);
         user_profile_pic = (ImageView) view.findViewById(R.id.ProfileImage);
-
         loan = view.findViewById(R.id.list_item_loan);
         loanAdapter = new UserLoanAdapter(dashboard_loan_array_list, getContext());
         loan.setAdapter(loanAdapter);
-
-       /* SharedPreferences preferences = this.getActivity().getSharedPreferences("image_path", Context.MODE_PRIVATE);
-        String image_path=preferences.getString("image_path","");
-        convert_path=Uri.parse(image_path);
-        Log.e("Shared_Image_path",image_path);*/
         decodeImage();
-
-        //LoadImage(image_path);
-        //retrivesharedPreferences();
         user_profile_pic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -125,9 +118,6 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         });
         //sharedPreferences();
     }
-
-    ArrayList deposit_array_list = new ArrayList();
-    ArrayList loan_array_list = new ArrayList();
 
     @Nullable
     @Override
@@ -148,18 +138,6 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray array = jsonObject.getJSONArray("Table2");
-                    //JSONArray info = jsonObject.getJSONArray("Table1");
-                    //JSONObject data = info.getJSONObject(0);
-                    //username = data.getString("FULL_NAME");
-                    //userphone = data.getString("MOBILE_NO");
-                    //useraddress = data.getString("ADDRESS");
-
-//                    Toast.makeText(getContext(), user_name + " " + user_phone + " " + user_address, Toast.LENGTH_SHORT).show();
-
-                    //user_name.setText(username);
-                    //user_phone.setText(userphone);
-                    //user_address.setText(useraddress);
-
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject contain = array.getJSONObject(i);
                         String code = contain.getString("AC_TYPE");
@@ -192,9 +170,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
             public void onErrorResponse(VolleyError error) {
 
             }
-        }) {
-
-        };
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
@@ -244,9 +220,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
             public void onErrorResponse(VolleyError error) {
 
             }
-        }) {
-
-        };
+        });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
@@ -294,6 +268,8 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                     progressDialog.dismiss();
                 }
                 loanAdapter.notifyDataSetChanged();
+                progressDialog.dismiss();
+                linearLayout.setVisibility(View.VISIBLE);
             }
         }, new Response.ErrorListener() {
             @Override
