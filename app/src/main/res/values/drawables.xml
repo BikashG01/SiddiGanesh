@@ -1,0 +1,10 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <item name="ic_home" type="drawable">@drawable/ic_home</item>
+    <item name="ic_accountinfo" type="drawable">@drawable/ic_accountinfo</item>
+    <item name="nav_statement" type="drawable">@drawable/nav_statement</item>
+    <item name="ic_alertmsg" type="drawable">@drawable/ic_alertmsg</item>
+    <item name="nav_change_pass" type="drawable">@drawable/nav_change_pass</item>
+    <item name="nav_feedback" type="drawable">@drawable/ic_feedback</item>
+    <item name="nav_about_us" type="drawable">@drawable/ic_about_us</item>
+    <item name="sign_out" type="drawable">@drawable/ic_signout</item>
+</resources>

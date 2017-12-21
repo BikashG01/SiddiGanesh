@@ -1,0 +1,104 @@
+<resources>
+    <string name="app_name">SiddiGanesh</string>
+    <string name="title_activity_siddhi__nav__drawer">Siddhi_Nav_Drawer</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="app_info">App Info</string>
+    <string name="siddhi">Respecting to the true spirit of Co-Operative revolution of government of Nepal,
+        Shree Siddi Ganesh Saving &amp;
+        Credit Co-Operative Ltd, is established under the Co-Operative Act 2048,
+        with the slogan "Your Satisfaction is our Destination" in 23th Baisakh,
+        2068 B.S. With due respect to the sprite of Co-Operative revolution of the government of Nepal,
+        Shree Siddi Ganesh Saving &amp;
+        Credit Co-Operative Ltd has been operating with number of financial opportunities to its needy members &amp;
+        society as a whole ignoring cheap assurance of the market since 5th Baisakh, 2066 B.S.</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- NavigationDrawer item name -->
+
+    <string name="Home">Home</string>
+    <string name="AccountInfo">Account Info</string>
+    <string name="MyStatements">My Statements</string>
+    <string name="Alert_msg">Alert Message</string>
+    <string name="changeMpin">Change MPIN</string>
+    <string name="Feedback">Feedback/Complaint</string>
+    <string name="About_us">About Us</string>
+    <string name="SignOut">Sign Out</string>
+
+    <!--Button Name-->
+    <string name="show_statement">SHOW STATEMENTS</string>
+    <string name="login">LOGIN</string>
+    <string name="confirm">CONFIRM</string>
+    <string name="send">SEND</string>
+    <string name="yes">Yes</string>
+    <string name="exit">Exit</string>
+    <string name="no">No</string>
+    <string name="cancel">Cancel</string>
+
+    <!--TextView Name-->
+    <string name="updatepass">Update Password ?</string>
+    <string name="are_you_exit">Are you sure to exit?</string>
+    <string name="oldpass">Old password(*)</string>
+    <string name="newpass">New password(*)</string>
+    <string name="confirm_pass">Confirm password(*)</string>
+    <string name="product">Product</string>
+    <string name="customer_name">Name</string>
+    <string name="customer_phn_no">Customer Phone</string>
+    <string name="customer_Address">Customer Address</string>
+    <string name="deposit_acc">DEPOSIT ACCOUNTS</string>
+    <string name="loan_acc">LOAN ACCOUNTS</string>
+    <string name="normal_savings">Normal Saving</string>
+    <string name="Account_no">Account No.:&#160;</string>
+    <string name="powered_by">Powered By:&#160;Info Brain Solution Pvt.Ltd</string>
+    <string name="balance">Balance</string>
+    <string name="amount">Amount</string>
+    <string name="frm_date">From Date:</string>
+    <string name="to_date">To Date:</string>
+    <string name="int_amount">Int&#160;Amt:&#160;</string>
+    <string name="fine">Fine:&#160;</string>
+    <string name="statement_type">Statement Type:</string>
+    <string name="siddiganesh">Shree Siddi Ganesh</string>
+    <string name="co_operatives">Saving &amp; Credit Co-Operative Ltd</string>
+    <string name="hint_mobile_no">Mobile No</string>
+    <string name="hint_mpin">MPIN</string>
+    <string name="remember_login">Remember Mobile</string>
+
+    <string name="account_type">Account Type</string>
+    <string name="npr">NPR. </string>
+   
+    <string name="product_name">Product Name:</string>
+    <string name="opening_date">Opening Date:</string>
+    <string name="matured_date">Matured Date:</string>
+    <string name="duration">Duration:</string>
+    <string name="principal_blc">Principal Balance:</string>
+    <string name="interest_blc">Interest Balance:</string>
+    <string name="interest_type">Interest Type:</string>
+    <string name="interest_rate">Interest Rate (%):</string>
+    <string name="amount_blc">Amount Balance:</string>
+    <string name="status">Status:</string>
+    <string name="installment_type">Installment Type:</string>
+    <string name="min_blc">Minimum Balance:</string>
+    <string name="loan_amount">Limit Amount:</string>
+    <string name="fine_penalty">Fine &amp; Penalty:</string>
+    <string name="account_branch">Account Branch:</string>
+    <string name="hint_subject">Subject</string>
+    <string name="acc_no">Account No:&#160;</string>
+    <string name="ac_no">Acc. No:&#160;</string>
+    <string name="hint_characters">Complain within 100 characters</string>
+
+    <!--Alert Dialog-->
+    <string name="alerttitle">Siddi Ganesh Saving &amp;Credit</string>
+
+
+    <string-array name="statement">
+        <item>Principal</item>
+        <item>Interest</item>
+        <item>Fine &amp; Penalty</item>
+
+    </string-array>
+</resources>

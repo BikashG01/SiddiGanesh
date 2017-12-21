@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loan"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent">
+
+
+    <RelativeLayout
+        android:id="@+id/top_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <TextView
+            android:id="@+id/loan_account_type"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:text="@string/account_type"
+            android:textColor="@color/textwhite"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/loan_acno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loan_account_type"
+            android:text="@string/ac_no"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/textwhite" />
+        <TextView
+            android:id="@+id/loan_account_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/loan_acno"
+            android:layout_below="@+id/loan_account_type"
+            android:text="@string/acc_no"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/textwhite" />
+
+        <TextView
+            android:id="@+id/loan_account_total_amount_principal_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/balance"
+            android:textColor="@color/textwhite"
+            android:textStyle="bold"
+
+            />
+
+        <TextView
+            android:id="@+id/loan_account_total_fine_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loan_account_balance"
+            android:layout_toLeftOf="@id/fine_amount_rs"
+            android:text= "@string/fine"
+            android:textColor="@color/textwhite" />
+
+        <TextView
+            android:id="@+id/fine_amount_rs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/loan_account_balance"
+            android:layout_toLeftOf="@+id/fine_amount"
+            android:text="@string/npr"
+            android:textColor="@color/textwhite"
+            android:paddingLeft="1dp"
+            />
+
+        <TextView
+            android:id="@+id/fine_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/fine_amount_rs"
+            android:layout_alignEnd="@+id/loan_account_total_amount_principal_header"
+            android:text="@string/amount"
+            android:paddingLeft="1dp"
+            android:textColor="@color/textwhite" />
+
+        <TextView
+            android:id="@+id/principal_balance_NRP"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/fine_amount_rs"
+            android:layout_toLeftOf="@+id/loan_account_balance"
+            android:text="@string/npr"
+            android:paddingBottom="5dp"
+            android:textColor="@color/textwhite"
+            android:paddingRight="2dp"
+            />
+
+        <TextView
+            android:id="@+id/loan_account_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/loan_account_type"
+            android:layout_centerVertical="true"
+            android:text="@string/balance"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/textwhite" />
+
+        <TextView
+            android:id="@+id/loan_interest_amount_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/loan_account_number"
+            android:text="@string/int_amount"
+            android:textColor="@color/textwhite"
+            android:paddingRight="1dp"/>
+
+        <TextView
+            android:id="@+id/loan_interest_amount_npr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loan_account_number"
+            android:layout_toEndOf="@+id/loan_interest_amount_header"
+            android:text="@string/npr"
+            android:paddingRight="1dp"
+            android:textColor="@color/textwhite" />
+
+        <TextView
+            android:id="@+id/loan_interest_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/loan_account_number"
+            android:layout_toRightOf="@id/loan_interest_amount_npr"
+            android:textColor="@color/textwhite" />
+    </RelativeLayout>
+    <View
+        android:layout_below="@+id/top_relative"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/transationinfo"
+        />
+
+</RelativeLayout>

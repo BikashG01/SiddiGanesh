@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/deposit"
+    android:background="@android:color/transparent"
+    android:cacheColorHint="@android:color/transparent"
+    >
+    <RelativeLayout
+        android:id="@+id/top_relative"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="6dp"
+        >
+        <TextView
+            android:id="@+id/deposit_account_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/account_type"
+            android:textStyle="bold"
+            android:textColor="@color/textwhite"
+            android:paddingBottom="5dp"
+            />
+        
+        <TextView
+            android:id="@+id/deposit_account_no"
+            android:layout_below="@+id/deposit_account_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ac_no"
+            android:textColor="@color/textwhite"
+            />
+        <TextView
+            android:id="@+id/deposit_account_number"
+            android:layout_below="@+id/deposit_account_type"
+            android:layout_toRightOf="@id/deposit_account_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/acc_no"
+            android:textColor="@color/textwhite"
+            />
+        <TextView
+            android:id="@+id/deposit_account_balance_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/balance"
+            android:textStyle="bold"
+            android:paddingBottom="5dp"
+            android:textColor="@color/textwhite"
+            />
+        <TextView
+            android:id="@+id/rs"
+            android:layout_below="@+id/deposit_account_balance_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/deposit_account_balance_total"
+            android:text="NPR. "
+            android:textColor="@color/textwhite"
+            />
+
+        <TextView
+            android:id="@+id/deposit_account_balance_total"
+            android:layout_below="@+id/deposit_account_balance_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/amount"
+            android:textColor="@color/textwhite"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_below="@+id/top_relative"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/transationinfo"
+        />
+
+</RelativeLayout>

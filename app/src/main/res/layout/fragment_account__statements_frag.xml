@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/background_blur"
+    android:paddingTop="20dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/custom_boarder"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/frm_date"
+                    android:textColor="@color/textwhite"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/frm_date"
+                    android:layout_width="153dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_textview"
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/to_date"
+                    android:textColor="@color/textwhite"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/to_date"
+                    android:layout_width="153dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/custom_textview"
+                    android:textColor="@color/colorPrimaryDark" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="2">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Account_no"
+                    android:textColor="@color/textwhite"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/account_spin"
+                    style="@style/spinner_style"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="153dp"
+                    android:layout_height="wrap_content"
+                    android:spinnerMode="dropdown" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/statement_type"
+                    android:textColor="@color/textwhite"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/statement_type"
+                    style="@style/spinner_style"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:layout_width="153dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/spinner_layout" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:padding="8dp">
+
+            <Button
+                android:id="@+id/show_statement_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/custom_btn_round"
+                android:text="@string/show_statement"
+                android:textColor="@color/textwhite" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/list_layout"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:background="@drawable/custom_boarder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ListView
+            android:id="@+id/list_statement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="5dp" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#017140</color>
+    <color name="colorPrimaryDark">#025C38</color>
+    <color name="colorAccent">#017140</color>
+    <color name="colortext"></color>
+    <color name="transationinfo">#DFFF5E</color>
+    <color name="info">#95989A</color>
+    <color name="hinttext">#5a8673</color>
+    <color name="textwhite">#ffffff</color>
+
+</resources>
