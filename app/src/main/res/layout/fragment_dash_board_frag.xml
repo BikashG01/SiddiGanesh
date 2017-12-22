@@ -93,7 +93,7 @@
 
                 android:layout_marginStart="15dp"
                 android:background="#F7E812"
-                android:text="DEPOSIT ACCOUNTS"
+                android:text="@string/deposit_acc"
                 android:textSize="32px"
                 android:textStyle="bold" />
 
@@ -123,7 +123,7 @@
                 android:layout_marginStart="15dp"
                 android:background="#F7E812"
                 android:paddingTop="5dp"
-                android:text="LOAN ACCOUNTS"
+                android:text="@string/loan_acc"
                 android:textSize="32px"
                 android:textStyle="bold" />
 

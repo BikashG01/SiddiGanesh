@@ -7,15 +7,15 @@ package com.infobrain.siddiganesh.data_model;
 public class Statment_data_model {
     private String statement_date;
     private String statement_blc;
-    private String statement_cramt;
+    private String statment_type;
     private String statement_dramt;
     private String statement_reference;
     private String statement_trans_blc;
 
-    public Statment_data_model(String statement_date, String statement_blc, String statement_cramt, String statement_dramt, String statement_reference, String statement_trans_blc) {
+    public Statment_data_model(String statement_date, String statement_blc, String statment_type, String statement_dramt, String statement_reference, String statement_trans_blc) {
         this.statement_date = statement_date;
         this.statement_blc = statement_blc;
-        this.statement_cramt = statement_cramt;
+        this.statment_type = statment_type;
         this.statement_dramt = statement_dramt;
         this.statement_reference = statement_reference;
         this.statement_trans_blc = statement_trans_blc;
@@ -29,8 +29,8 @@ public class Statment_data_model {
         return statement_blc;
     }
 
-    public String getStatement_cramt() {
-        return statement_cramt;
+    public String getStatment_type() {
+        return statment_type;
     }
 
     public String getStatement_dramt() {

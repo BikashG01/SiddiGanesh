@@ -18,6 +18,7 @@ import java.util.List;
  */
 
 public class Statment_adapter extends BaseAdapter {
+
     List<Statment_data_model> Statment_data_models;
     Context context;
 
@@ -47,6 +48,7 @@ public class Statment_adapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         StatementHolder statementHolder=null;
         LayoutInflater inflater= (LayoutInflater)context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if(view==null){
@@ -65,7 +67,7 @@ public class Statment_adapter extends BaseAdapter {
         Statment_data_model data_model= (Statment_data_model) getItem(i);
         statementHolder.stat_date.setText(data_model.getStatement_date());
         statementHolder.stat_tran_blc.setText(data_model.getStatement_trans_blc());
-        //statementHolder.stat_status.setText(data_model.getStatement_cramt());
+        statementHolder.stat_status.setText(data_model.getStatment_type());
         statementHolder.stat_ref.setText(data_model.getStatement_reference());
         statementHolder.stat_blc.setText(data_model.getStatement_blc());
         return view;

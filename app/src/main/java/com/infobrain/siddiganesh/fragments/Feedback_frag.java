@@ -33,7 +33,7 @@ import org.json.JSONObject;
  */
 
 public class Feedback_frag extends Fragment {
-    String sub, msg, post_feedback_url,post_feedb_url;
+    String sub, msg, post_feedback_url;
     EditText subject, message;
     SharedPreferences preferences;
     Button feedback_send_btn;
@@ -79,7 +79,7 @@ public class Feedback_frag extends Fragment {
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                     post_feedback_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Post_Feedback_Message?Mobile_No=" + userPhoneNo + "&MPin=" + userMpin + "&Subject=" + sub + "&Message=" + msg;
-                    post_feedb_url = post_feedback_url.replaceAll(" ", "+" + "%20" + "+");
+//                    post_feedback_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Post_Feedback_Message?Mobile_No="+phone+"&MPin="+pin+"&Subject="+sub+"&Message="+msg;
                     Log.e("URL", post_feedback_url);
                     post_feedback(post_feedback_url);
                     //Log.e("Inside call",phone);

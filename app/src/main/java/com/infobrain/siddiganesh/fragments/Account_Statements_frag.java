@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -42,9 +43,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import static android.view.View.VISIBLE;
 
 
 public class Account_Statements_frag extends Fragment {
@@ -55,25 +59,36 @@ public class Account_Statements_frag extends Fragment {
     private ListView statement_list_view;
     private ArrayList statment_value_list = new ArrayList();
     private String SHOWS_URL;
+    Double opening_bal;
     private List<Statment_data_model> statment_data_models = new ArrayList<>();
     private Statment_adapter statment_adapters;
     private int year, month, day;
     private int fyear, fmonth, fday;
     private Calendar calendar1, calendar2;
     private String fromDate, toDate = "0";
-    private TextView from_date, to_date, open_bal;
+    private TextView from_date, to_date;
+    private TextView open_bal;
     private List<String> account_no_lists;
     private String account_name;
     private SimpleDateFormat sdf;
     private String user_number;
     private String user_mpin;
-    private String date, desc, transaction_balance;
-    private Double total_balance, cr_amt, dr_amt, dr_cr_amt;
-    private Double total_balance_main, opening_bal;
-    private String main_date_eng;
-    private String status;
     private SharedPreferences preferences;
+
+    LinearLayout show_opening_bal;
+
+
     private ArrayAdapter<CharSequence> statement_adapater;
+
+    String date, desc, transaction_balance;
+
+    Double total_balance, cr_amt, dr_amt, dr_cr_amt;
+
+    private Double total_balance_main;
+
+    String main_date_eng;
+
+    String status;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -87,15 +102,29 @@ public class Account_Statements_frag extends Fragment {
         linearLayout_stat_list = (LinearLayout) view.findViewById(R.id.list_layout);
         from_date = (TextView) view.findViewById(R.id.frm_date);
         to_date = (TextView) view.findViewById(R.id.to_date);
+        /*Bundle args = getArguments();
+        String status = args.getString("Status");
+        Log.e("STATUS passeed", status);
+        String data = args.getString("Deposit_no");
+        if (status.equals("1")) {
+            linearLayout_stat_list.setVisibility(VISIBLE);
+            load_statements();
+        }*/
         statment_adapters = new Statment_adapter(statment_data_models, getContext());
         //statement_list_view.setAdapter(new Statment_adapter(statment_value_list, getContext()));
         statement_adapater = ArrayAdapter.createFromResource(getContext(), R.array.statement, android.R.layout.simple_spinner_item);
         statement_adapater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statment_type_spin.setAdapter(statement_adapater);
 
+        show_opening_bal = view.findViewById(R.id.show_opening_balance);
+        open_bal = view.findViewById(R.id.opening_balance);
+
+
         preferences = getActivity().getSharedPreferences("LOGIN", 0);
         user_number = preferences.getString("user_number", "");
         user_mpin = preferences.getString("user_mpin", "");
+
+
         spinner_load();
 
 
@@ -158,16 +187,16 @@ public class Account_Statements_frag extends Fragment {
                     Toast.makeText(getContext(), "Please select less than 35 days", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    linearLayout_stat_list.setVisibility(View.VISIBLE);
+                    linearLayout_stat_list.setVisibility(VISIBLE);
                     statment_data_models.clear();
                     load_statements();
+
+
                     //statement_list_view = (ListView) view.findViewById(R.id.list_statement);
                     statment_adapters = new Statment_adapter(statment_data_models, getContext());
                     statement_list_view.setAdapter(statment_adapters);
                     statment_adapters.notifyDataSetChanged();
                 }
-
-
             }
         });
 
@@ -198,6 +227,7 @@ public class Account_Statements_frag extends Fragment {
             public void onNothingSelected(AdapterView<?> arg0) {
             }
         });
+
 
         //Log.e("ADD DATE", addDate);
     }
@@ -305,7 +335,7 @@ public class Account_Statements_frag extends Fragment {
                     JSONArray array = jsonObject.getJSONArray("Table1");
                     JSONObject opening_bal_obj = array.getJSONObject(0);
                     opening_bal = opening_bal_obj.getDouble("Balance");
-                    //open_bal.setText(String.valueOf(opening_bal.floatValue()));
+                    open_bal.setText(String.valueOf(opening_bal.floatValue()));
                     total_balance_main = opening_bal;
                     Log.e("Main Opening Bal", String.valueOf(opening_bal));
 //                    Double total_balance
