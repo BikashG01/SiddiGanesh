@@ -74,7 +74,7 @@
 
     <string name="account_type">Account Type</string>
     <string name="npr">NPR.&#160;</string>
-   
+
     <string name="product_name">Product Name:</string>
     <string name="opening_date">Opening Date:</string>
     <string name="matured_date">Matured Date:</string>
@@ -97,6 +97,11 @@
 
     <!--Alert Dialog-->
     <string name="alerttitle">Siddi Ganesh Saving &amp;Credit</string>
+
+    <!--Info Brain profile-->
+    <string name="infobraininfo">Info Brain Solution is private IT solution company situated in Nagapokhari,Naxal,Kathmandu.Over last decades
+    we are dedicated to provide premium IT solution to our clients. We are successful to satisfy our customers by providing them with premium products.\n\n
+    We provides various type of services including web applcation development, Mobile Application Development,Web-Hosting and maintenance.</string>
 
 
     <string-array name="statement">

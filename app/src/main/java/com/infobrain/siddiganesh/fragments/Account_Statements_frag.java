@@ -50,8 +50,8 @@ import java.util.concurrent.TimeUnit;
 public class Account_Statements_frag extends Fragment {
     private Button show_statement;
     private LinearLayout linearLayout_stat_list;
-    private Spinner statment_type_spin,account_type_spin;
-    private String statement_value,acc_no;
+    private Spinner statment_type_spin, account_type_spin;
+    private String statement_value, acc_no;
     private ListView statement_list_view;
     private ArrayList statment_value_list = new ArrayList();
     private String SHOWS_URL;
@@ -61,14 +61,18 @@ public class Account_Statements_frag extends Fragment {
     private int fyear, fmonth, fday;
     private Calendar calendar1, calendar2;
     private String fromDate, toDate = "0";
-    private TextView from_date, to_date;
+    private TextView from_date, to_date, open_bal;
     private List<String> account_no_lists;
     private String account_name;
     private SimpleDateFormat sdf;
     private String user_number;
     private String user_mpin;
+    private String date, desc, transaction_balance;
+    private Double total_balance, cr_amt, dr_amt, dr_cr_amt;
+    private Double total_balance_main, opening_bal;
+    private String main_date_eng;
+    private String status;
     private SharedPreferences preferences;
-
     private ArrayAdapter<CharSequence> statement_adapater;
 
     @Override
@@ -76,7 +80,7 @@ public class Account_Statements_frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         statment_type_spin = (Spinner) view.findViewById(R.id.statement_type);
-        account_type_spin=(Spinner)view.findViewById(R.id.account_spin);
+        account_type_spin = (Spinner) view.findViewById(R.id.account_spin);
         account_no_lists = new ArrayList<>();
         statement_list_view = (ListView) view.findViewById(R.id.list_statement);
         show_statement = (Button) view.findViewById(R.id.show_statement_btn);
@@ -113,7 +117,7 @@ public class Account_Statements_frag extends Fragment {
         //fyear = calendar2.get(Calendar.YEAR);
         //fmonth = calendar2.get(Calendar.MONTH);
         //fday=calendar2.get(Calendar.DAY_OF_MONTH);
-        calendar2.add(Calendar.DAY_OF_MONTH, -35);
+        calendar2.add(Calendar.DAY_OF_MONTH, -30);
         Date addDate = calendar2.getTime();
 
         //olddate = fyear + "-" + new StringBuilder().append(fmonth+1) + "-" + fday;
@@ -166,8 +170,6 @@ public class Account_Statements_frag extends Fragment {
 
             }
         });
-
-
 
 
         statment_type_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -279,8 +281,6 @@ public class Account_Statements_frag extends Fragment {
     }
 
 
-
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -294,6 +294,7 @@ public class Account_Statements_frag extends Fragment {
         progressDialog.setMessage("Loading...");
         progressDialog.show();
         SHOWS_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Get_Accounts_Statement?Mobile_No=9856022323&MPin=1234&Acc_No=0037NS&Date1=2017-11-06&Date2=2017-12-05&Statement_Type=PRN";
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, SHOWS_URL, new Response.Listener<String>() {
 
             @Override
@@ -302,16 +303,41 @@ public class Account_Statements_frag extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray array = jsonObject.getJSONArray("Table1");
-                    for (int i = 0; i < array.length(); i++) {
+                    JSONObject opening_bal_obj = array.getJSONObject(0);
+                    opening_bal = opening_bal_obj.getDouble("Balance");
+                    //open_bal.setText(String.valueOf(opening_bal.floatValue()));
+                    total_balance_main = opening_bal;
+                    Log.e("Main Opening Bal", String.valueOf(opening_bal));
+//                    Double total_balance
+                    for (int i = 1; i < array.length(); i++) {
                         JSONObject contain = array.getJSONObject(i);
-                        Statment_data_model stat_dataModel = new Statment_data_model(
-                                contain.getString("VCH_NDATE"),
-                                contain.getString("Balance"),
-                                contain.getString("DrAmt"),
-                                contain.getString("CrAmt"),
-                                contain.getString("AC_DESC"),
-                                contain.getString("Balance")
-                        );
+
+                        date = contain.getString("VCH_DATE");
+                        main_date_eng = date.replaceAll("T00:00:00", "");
+
+                        desc = contain.getString("AC_DESC");
+
+                        cr_amt = contain.getDouble("CrAmt");
+                        dr_amt = contain.getDouble("DrAmt");
+
+                        total_balance_main += cr_amt - dr_amt;
+
+                        Log.e("TOTAL BALANCE NOW", String.valueOf(total_balance_main));
+                        Log.e("CR AMT VALUE", String.valueOf(cr_amt));
+                        Log.e("DR AMT VALUE", String.valueOf(dr_amt));
+
+                        if (cr_amt == 0.00) {
+                            dr_cr_amt = dr_amt;
+                            status = "WITHDRAW";
+                            Log.e("STATUS", "Status:" + status);
+
+                        } else if (dr_amt == 0.00) {
+                            dr_cr_amt = cr_amt;
+                            status = "DEPOSIT";
+                            Log.e("STATUS", "Status:" + status);
+                        }
+
+                        Statment_data_model stat_dataModel = new Statment_data_model(main_date_eng, String.valueOf(total_balance_main.floatValue()), status, String.valueOf(dr_amt), desc, String.valueOf(dr_cr_amt));
                         statment_data_models.add(stat_dataModel);
                         //Toast.makeText(MainActivity.this, String.valueOf(model.add(data_data)), Toast.LENGTH_SHORT).show();
                     }
@@ -325,6 +351,7 @@ public class Account_Statements_frag extends Fragment {
                     progressDialog.dismiss();
                 }
                 statment_adapters.notifyDataSetChanged();
+
 
             }
         }, new Response.ErrorListener() {
@@ -360,7 +387,7 @@ public class Account_Statements_frag extends Fragment {
                         //account_no_lists.add(acc_nos);
 
                     }
-                    account_type_spin.setAdapter(new ArrayAdapter<String>(getContext(),android.R.layout.simple_spinner_dropdown_item, account_no_lists));
+                    account_type_spin.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, account_no_lists));
 
 
                 } catch (JSONException e) {

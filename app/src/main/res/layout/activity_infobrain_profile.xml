@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:padding="16dp"
+    tools:context="com.infobrain.siddiganesh.activities.infobrainProfile">
+
+    <ImageView
+        android:id="@+id/info_brain_logo"
+        android:layout_width="165dp"
+        android:layout_height="165dp"
+       android:layout_centerHorizontal="true"
+        android:src="@drawable/infobrain" />
+
+    <TextView
+        android:id="@+id/about_us"
+        android:layout_below="@id/info_brain_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Namaste,"
+        android:textColor="#037ABC"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/infobraininfo"
+        android:textStyle="normal"
+        android:textSize="15sp"
+        android:lineSpacingExtra="2sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/about_us"/>
+    <View
+        android:id="@+id/line"
+        android:layout_below="@id/description"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="#8f8c8c"
+        android:layout_marginBottom="10dp"
+        />
+    <TextView
+        android:id="@+id/follow_us"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Follow us on:"
+        android:textSize="18dp"
+        android:textColor="#037ABC"
+        android:layout_below="@+id/line"
+        android:textStyle="bold"/>
+    <LinearLayout
+        android:id="@+id/logo_layout"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/follow_us"
+        android:layout_marginTop="15dp"
+        android:layout_height="wrap_content">
+    <ImageButton
+        android:id="@+id/facebook"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/facebook_logo"/>
+    <ImageButton
+        android:id="@+id/mail"
+        android:layout_marginLeft="35dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/email_logo"/>
+    </LinearLayout>
+
+</RelativeLayout>

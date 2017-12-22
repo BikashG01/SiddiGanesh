@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@drawable/background_blur"
+    android:orientation="vertical"
     android:paddingTop="10dp">
 
     <LinearLayout
@@ -88,9 +88,9 @@
                 <Spinner
                     android:id="@+id/account_spin"
                     style="@style/spinner_style"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_width="153dp"
-                    android:layout_height="32dp"/>
+                    android:layout_height="32dp"
+                    android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
 
             <LinearLayout
@@ -110,10 +110,10 @@
                 <Spinner
                     android:id="@+id/statement_type"
                     style="@style/spinner_style"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_width="153dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_layout" />
+                    android:background="@drawable/spinner_layout"
+                    android:textColor="@color/colorPrimaryDark" />
             </LinearLayout>
 
 
@@ -137,19 +137,47 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/list_layout"
-        android:visibility="invisible"
-        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_marginTop="10dp"
+        android:visibility="invisible">
+
         <ListView
             android:id="@+id/list_statement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="@android:color/transparent"
             android:dividerHeight="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/show_opening_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/balance_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Opening Balance: "
+            android:textColor="@color/transationinfo"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/opening_balance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/transationinfo"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </LinearLayout>

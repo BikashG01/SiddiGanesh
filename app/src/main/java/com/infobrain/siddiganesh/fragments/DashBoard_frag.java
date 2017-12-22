@@ -12,12 +12,15 @@ import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -69,7 +72,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
     String userPhoneNo, userMpin;
     SwipeRefreshLayout swiper;
     private LinearLayout linearLayout;
-
+    private String depo_ac_no,status="1";
     public UserDepositAdapter depositAdapter;
     public UserLoanAdapter loanAdapter;
 
@@ -112,7 +115,34 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
 
             }
         });
-        //sharedPreferences();
+        //Deposit Loan item listerner
+
+        deposit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                UserDepositDataModel selected_object = (UserDepositDataModel)adapterView.getItemAtPosition(i);
+                depo_ac_no = selected_object.getAccount_number();
+                Fragment fragment = new Account_Statements_frag();
+                Bundle bundle= new Bundle();
+                bundle.putString("Deposit_no",depo_ac_no);
+                bundle.putString("Status",status);
+                Log.e("STAATUS",status);
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.frame_layout, fragment);
+                ft.commit();
+
+            }
+        });
+
+        loan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     }
 
     @Nullable

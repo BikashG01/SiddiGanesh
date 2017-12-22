@@ -2,11 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/transparent"
-    android:cacheColorHint="@android:color/transparent"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
-    android:paddingTop="16dp">
+    android:padding="16dp">
 
     <LinearLayout
         android:id="@+id/date_ref"
@@ -18,18 +14,15 @@
             android:id="@+id/statement_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Date"
-            android:textColor="@color/textwhite"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:text="Date" />
 
         <TextView
             android:id="@+id/statement_ref"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:textSize="13sp"
-            android:text="Reference"
-            android:textColor="@color/textwhite"/>
+            android:text="Reference" />
 
     </LinearLayout>
 
@@ -37,8 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -48,21 +40,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/balance"
-                android:textStyle="bold"
-                android:textColor="@color/textwhite"/>
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/balance_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="000000000"
-                android:textColor="@color/textwhite"/>
+                android:text="000000000" />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:id="@+id/balance_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -70,44 +59,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/npr"
-                android:textColor="@color/textwhite"/>
-
+                android:text="@string/npr" />
             <TextView
                 android:id="@+id/statement_blc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="000000000"
-                android:textColor="@color/textwhite"/>
+                android:text="000000000" />
         </LinearLayout>
 
 
     </LinearLayout>
-
     <TextView
         android:id="@+id/statement_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="WITHDRAW"
         android:textSize="12sp"
-        android:textColor="@color/textwhite"
-        android:textStyle="bold" />
-
+        android:textStyle="bold"
+        android:text="WITHDRAW"/>
     <TextView
+        android:layout_below="@+id/statement_status"
         android:layout_width="wrap_content"
         android:layout_height="1dp"
-        android:layout_below="@+id/statement_status"
-        android:layout_centerHorizontal="true"
         android:background="@color/transationinfo"
-        android:text="WITHDRAW" />
+        android:layout_centerHorizontal="true"
 
+        android:text="WITHDRAW"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginTop="85dp"
-        android:layout_below="@+id/statement_status"
-        android:background="@color/transationinfo" />
+        android:layout_below="@id/statement_status"
+        android:layout_marginTop="50dp"
+        android:background="@color/transationinfo"/>
 
 </RelativeLayout>

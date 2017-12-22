@@ -1,13 +1,20 @@
 package com.infobrain.siddiganesh.activities;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -35,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private SharedPreferences sharedPreferences,preferences, checkpref;
+    private SharedPreferences sharedPreferences, preferences, checkpref;
     private Button login_btn;
     private ProgressDialog progressDialog;
     private TextView brain_info_call, brain_info_info;
@@ -52,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private String state = "1";
     private String boolbool;
     private String push_url;
+    private int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
     private List<String> account_no_list = new ArrayList<>();
     private List<String> account_nos_only = new ArrayList<>();
@@ -61,18 +69,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         push_url = "http://www.lifespassenger.com/siddhiganesh/fcm_insert.php";
         preferences = getSharedPreferences("LOGIN", 0);
         checkpref = getSharedPreferences("CHECK", 0);
         login_btn = (Button) findViewById(R.id.login_btn);
         user_mobile = (EditText) findViewById(R.id.user_mobile_no);
         mpin = (EditText) findViewById(R.id.user_pass);
-        brain_info_call=(TextView)findViewById(R.id.info_phone);
-        brain_info_info=(TextView)findViewById(R.id.info_info);
+        brain_info_call = (TextView) findViewById(R.id.info_phone);
+        brain_info_info = (TextView) findViewById(R.id.info_info);
         checkBox = (CheckBox) findViewById(R.id.check_remember);
        /* loaded_number =checkpref.getString("user_number", "");*/
-        checkBoxValue = checkpref.getBoolean("CheckBox_Value",false );
-        loaded_number=preferences.getString("user_number","");
+        checkBoxValue = checkpref.getBoolean("CheckBox_Value", false);
+        loaded_number = preferences.getString("user_number", "");
         /*Log.e("Checkbox",checkBoxValue);
         if (checkBoxValue.equals("1")) {
             loadNumber();
@@ -80,6 +89,63 @@ public class MainActivity extends AppCompatActivity {
             user_mobile.setText("");
         }*/
         loadNumber(checkBoxValue);
+        brain_info_call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:9843401316"));
+
+                if (ActivityCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.CALL_PHONE)) {
+                        startActivity(callIntent);
+                    } else {
+                        ActivityCompat.requestPermissions(MainActivity.this,
+                                new String[]{android.Manifest.permission.CALL_PHONE},
+                                MY_PERMISSIONS_REQUEST_CALL_PHONE);
+                    }
+                } else {
+                    startActivity(callIntent);
+                }
+
+
+             /*   Intent callIntent = new Intent(Intent.ACTION_CALL);
+                callIntent.setData(Uri.parse("tel:" + "9849915378"));
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                    startActivity(callIntent);
+                } else {
+
+                }
+                startActivity(callIntent);*/
+
+
+            }
+        });
+        brain_info_info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),infobrainProfile.class);
+                startActivity(i);
+           /*     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+
+                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                View dialogView = inflater.inflate(R.layout.infobrain_profile, null);
+                builder.setTitle("Booking Confirm");
+                builder.setView(dialogView);
+                final AlertDialog dialog = builder.create();
+
+                Button btn_confirm=(Button)dialogView.findViewById(R.id.btn_confirm);
+                btn_confirm.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();*/
+
+            }
+        });
 
         login_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,10 +191,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadNumber(boolean value) {
-        if (checkBox.isChecked()){
+        if (checkBox.isChecked()) {
             loaded_number = preferences.getString("userLogin", "");
-        }
-        else{
+        } else {
             user_mobile.setText(loaded_number);
         }
 
