@@ -1,4 +1,3 @@
-package com.infobrain.siddiganesh.data_model;
 
 /**
  * Created by bikas on 12/4/2017.
@@ -44,4 +43,5 @@ public class Statment_data_model {
     public String getStatement_trans_blc() {
         return statement_trans_blc;
     }
+
 }

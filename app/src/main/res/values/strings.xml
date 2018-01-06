@@ -71,10 +71,15 @@
     <string name="hint_mobile_no">Mobile No</string>
     <string name="hint_mpin">MPIN</string>
     <string name="remember_login">Remember Mobile</string>
+    <string name="subject">Subject:</string>
+    <string name="message">Message:</string>
+    <string name="Date">Date: </string>
 
     <string name="account_type">Account Type</string>
     <string name="npr">NPR.&#160;</string>
-
+    <string name="Namaste">Namaste,&#160;</string>
+    <string name="Namaste2">Namaste</string>
+    <string name="Follow">Follow us on:</string>
     <string name="product_name">Product Name:</string>
     <string name="opening_date">Opening Date:</string>
     <string name="matured_date">Matured Date:</string>

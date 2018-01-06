@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.activities;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +15,8 @@ public class infobrainProfile extends AppCompatActivity implements View.OnClickL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infobrain_profile);
-        facebook=(ImageButton)findViewById(R.id.facebook);
-        email=(ImageButton)findViewById(R.id.mail);
+        facebook=findViewById(R.id.facebook);
+        email=findViewById(R.id.mail);
         facebook.setOnClickListener(this);
         email.setOnClickListener(this);
 

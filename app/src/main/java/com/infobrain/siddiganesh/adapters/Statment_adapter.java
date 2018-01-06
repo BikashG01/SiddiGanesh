@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.adapters;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +9,7 @@ import android.widget.TextView;
 import com.infobrain.siddiganesh.R;
 import com.infobrain.siddiganesh.data_model.Statment_data_model;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,11 +53,11 @@ public class Statment_adapter extends BaseAdapter {
         if(view==null){
             view=inflater.inflate(R.layout.custom_statement,null);
             statementHolder= new StatementHolder();
-            statementHolder.stat_date=(TextView)view.findViewById(R.id.statement_date);
-            statementHolder.stat_tran_blc=(TextView)view.findViewById(R.id.statement_blc);
-            statementHolder.stat_ref=(TextView)view.findViewById(R.id.statement_ref);
-            statementHolder.stat_blc=(TextView)view.findViewById(R.id.balance_total);
-            statementHolder.stat_status=(TextView)view.findViewById(R.id.statement_status);
+            statementHolder.stat_date=view.findViewById(R.id.statement_date);
+            statementHolder.stat_tran_blc=view.findViewById(R.id.statement_blc);
+            statementHolder.stat_ref=view.findViewById(R.id.statement_ref);
+            statementHolder.stat_blc=view.findViewById(R.id.balance_total);
+            statementHolder.stat_status=view.findViewById(R.id.statement_status);
             view.setTag(statementHolder);
         }
         else{

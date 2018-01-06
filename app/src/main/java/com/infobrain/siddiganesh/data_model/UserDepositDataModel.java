@@ -1,8 +1,3 @@
-package com.infobrain.siddiganesh.data_model;
-
-/**
- * Created by frank on 12/3/2017.
- */
 
 public class UserDepositDataModel {
 

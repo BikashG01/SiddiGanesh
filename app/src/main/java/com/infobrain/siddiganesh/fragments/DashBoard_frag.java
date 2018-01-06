@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.fragments;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -27,7 +26,6 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -40,17 +38,17 @@ import com.infobrain.siddiganesh.adapters.UserDepositAdapter;
 import com.infobrain.siddiganesh.data_model.UserDepositDataModel;
 import com.infobrain.siddiganesh.adapters.UserLoanAdapter;
 import com.infobrain.siddiganesh.data_model.UserLoanDataModel;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     ListView deposit;
@@ -72,20 +70,28 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
     String userPhoneNo, userMpin;
     SwipeRefreshLayout swiper;
     private LinearLayout linearLayout;
-    private String depo_ac_no,status="1";
+    private String depo_ac_no, loan_ac_no, status = "1";
     public UserDepositAdapter depositAdapter;
     public UserLoanAdapter loanAdapter;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Please Wait...");
         progressDialog.setIndeterminate(true);
         progressDialog.setCancelable(false);
         progressDialog.show();
-        linearLayout=(LinearLayout)view.findViewById(R.id.main_layout);
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                progressDialog.dismiss();
+
+                t.cancel();
+
+            }
+        }, 5000);
+        linearLayout = (LinearLayout) view.findViewById(R.id.main_layout);
         linearLayout.setVisibility(View.INVISIBLE);
 
         user_name = view.findViewById(R.id.user_name);
@@ -99,10 +105,10 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         getDepositList(userPhoneNo, userMpin);
         getLoanList(userPhoneNo, userMpin);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        deposit = (ListView) view.findViewById(R.id.list_item_deposit);
+        deposit = view.findViewById(R.id.list_item_deposit);
         depositAdapter = new UserDepositAdapter(dashboard_deposit_array_list, getContext());
         deposit.setAdapter(depositAdapter);
-        user_profile_pic = (ImageView) view.findViewById(R.id.ProfileImage);
+        user_profile_pic = view.findViewById(R.id.ProfileImage);
         loan = view.findViewById(R.id.list_item_loan);
         loanAdapter = new UserLoanAdapter(dashboard_loan_array_list, getContext());
         loan.setAdapter(loanAdapter);
@@ -115,21 +121,21 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
 
             }
         });
-        //Deposit Loan item listerner
+        //Deposit Loan item
 
         deposit.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                UserDepositDataModel selected_object = (UserDepositDataModel)adapterView.getItemAtPosition(i);
+                UserDepositDataModel selected_object = (UserDepositDataModel) adapterView.getItemAtPosition(i);
                 depo_ac_no = selected_object.getAccount_number();
                 Fragment fragment = new Account_Statements_frag();
-                Bundle bundle= new Bundle();
-                bundle.putString("Deposit_no",depo_ac_no);
-                bundle.putString("Status",status);
-                Log.e("STAATUS",status);
+                Bundle bundle = new Bundle();
+                bundle.putString("AC_NO", depo_ac_no);
+                bundle.putString("Status", status);
+                Log.e("STATUS", status);
                 fragment.setArguments(bundle);
-                FragmentManager fragmentManager= getActivity().getSupportFragmentManager();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 ft.replace(R.id.frame_layout, fragment);
                 ft.commit();
@@ -140,6 +146,19 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         loan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                UserLoanDataModel selected_loan_object = (UserLoanDataModel) adapterView.getItemAtPosition(i);
+                loan_ac_no = selected_loan_object.getLoan_account_number();
+                Fragment fragment = new Account_Statements_frag();
+                Bundle bundle = new Bundle();
+                bundle.putString("AC_NO", loan_ac_no);
+                Log.e("LOAN_NO", loan_ac_no);
+                bundle.putString("Status", status);
+                Log.e("STATUS", status);
+                fragment.setArguments(bundle);
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.frame_layout, fragment);
+                ft.commit();
 
             }
         });
@@ -155,7 +174,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
 
 
     private void getDepositList(String u_num, String u_pin) {
-        dashboard_getDepositList_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Validate_UserLogin?Mobile_No=" + u_num + "&MPin=" + u_pin;
+        dashboard_getDepositList_URL = "..............." + u_num + "&MPin=" + u_pin;
 
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, dashboard_getDepositList_URL, new Response.Listener<String>() {
 
@@ -172,16 +191,10 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                             String ac_no = contain.getString("AC_NO");
                             String p_bal = contain.getString("Prn_Bal");
                             String prin_bal = p_bal.replaceAll("[^\\d.]", "");
-
-//                            Toast.makeText(getContext(), p_name + " " + ac_no + " " + prin_bal, Toast.LENGTH_SHORT).show();
                             UserDepositDataModel depo_list = new UserDepositDataModel(p_name, ac_no, prin_bal);
                             dashboard_deposit_array_list.add(depo_list);
                             ListUnion.setDynamicHeight(deposit);
                         }
-//                        else {
-//                            Toast.makeText(getContext(), "Bahira", Toast.LENGTH_SHORT).show();
-//                        }
-
                     }
 
                 } catch (JSONException e) {
@@ -194,7 +207,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getContext(), "No Internet!", Toast.LENGTH_SHORT).show();
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -206,7 +219,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
 
     private void getUserInfo(String u_num, String u_pin) {
 
-        dashboard_getUserInfo_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Validate_UserLogin?Mobile_No=" + u_num + "&MPin=" + u_pin;
+        dashboard_getUserInfo_URL = "..............." + u_num + "&MPin=" + u_pin;
 
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, dashboard_getUserInfo_URL, new Response.Listener<String>() {
 
@@ -226,9 +239,6 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                     editor.putString("user_phone", userphone);
                     editor.putString("user_address", useraddress);
                     editor.commit();
-
-//                    Toast.makeText(getContext(), user_name + " " + user_phone + " " + user_address, Toast.LENGTH_SHORT).show();
-
                     user_name.setText(username);
                     user_phone.setText(userphone);
                     user_address.setText(useraddress);
@@ -244,6 +254,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No Internet!", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -253,7 +264,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
     }
 
     private void getLoanList(String u_num, String u_pin) {
-        dashboard_getLoanList_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Validate_UserLogin?Mobile_No=" + u_num + "&MPin=" + u_pin;
+        dashboard_getLoanList_URL = "................." + u_num + "&MPin=" + u_pin;
 
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, dashboard_getLoanList_URL, new Response.Listener<String>() {
 
@@ -267,7 +278,6 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                         JSONObject contain = array.getJSONObject(i);
                         String code = contain.getString("AC_TYPE");
                         if (code.equals("LOAN")) {
-//                            loan_account_type, loan_account_number, loan_account_total_amount_principal,loan_interest_amount,loan_fine_amount
                             String ln_ac_type = contain.getString("PRODUCT_NAME");
                             String ln_ac_number = contain.getString("AC_NO");
                             String ln_ac_total_amt_principal = contain.getString("Prn_Bal");
@@ -276,15 +286,10 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                             String ln_int = ln_int_amount.replaceAll("[^\\d.]", "");
                             String ln_fine_amt = contain.getString("Fine_Amt");
                             String ln_fine = ln_fine_amt.replaceAll("[^\\d.]", "");
-//                            Toast.makeText(getContext(), ln_ac_number + " " + ln_ac_total_principal + " " + ln_ac_type
-//                                    + " " + ln_int_amount + " " + ln_fine_amt, Toast.LENGTH_SHORT).show();
                             UserLoanDataModel loan_list = new UserLoanDataModel(ln_ac_type, ln_ac_number, ln_ac_total_principal, ln_int, ln_fine);
                             dashboard_loan_array_list.add(loan_list);
                             ListUnion.setDynamicHeight(loan);
                         }
-//                        else {
-//                            Toast.makeText(getContext(), "Bahira", Toast.LENGTH_SHORT).show();
-//                        }
                     }
                     if (dashboard_loan_array_list != null) {
                         progressDialog.dismiss();
@@ -292,6 +297,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                 } catch (JSONException e) {
                     Log.e("ERROR:", e.getMessage());
                     progressDialog.dismiss();
+                    swiper.setRefreshing(false);
                 }
                 loanAdapter.notifyDataSetChanged();
                 progressDialog.dismiss();
@@ -300,6 +306,7 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No Internet!", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
             }
@@ -309,20 +316,18 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
-
     }
 
     @Override
     public void onRefresh() {
-        getUserInfo(userPhoneNo, userMpin);
-        getDepositList(userPhoneNo, userMpin);
-        getLoanList(userPhoneNo, userMpin);
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                swiper.setRefreshing(false);
+            }
+        }, 3000);
 
-        swiper.setRefreshing(false);
-        swiper.destroyDrawingCache();
-        swiper.clearAnimation();
+
     }
-
 
     public static class ListUnion {
         public static void setDynamicHeight(ListView mListView) {
@@ -366,14 +371,11 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
                 bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), path);
                 user_profile_pic.setImageBitmap(bitmap);
                 stream = getActivity().getContentResolver().openInputStream(data.getData());
-                // Encoding Image into Base64
                 Bitmap realImage = BitmapFactory.decodeStream(stream);
                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                 realImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                 byte[] b = baos.toByteArray();
-                //Converting Base64 into String to Store in SharedPreferences
                 encodedImage = Base64.encodeToString(b, Base64.DEFAULT);
-                //NOw storing String to SharedPreferences
                 sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("my_image", encodedImage);
@@ -393,7 +395,6 @@ public class DashBoard_frag extends Fragment implements SwipeRefreshLayout.OnRef
     public void decodeImage() {
         encodedImage = sharedPreferences.getString("my_image", "");
         if (!encodedImage.equalsIgnoreCase("")) {
-            //Decoding the Image and display in ImageView
             byte[] b = Base64.decode(encodedImage, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(b, 0, b.length);
             user_profile_pic.setImageBitmap(bitmap);

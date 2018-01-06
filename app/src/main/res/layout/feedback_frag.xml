@@ -23,7 +23,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Subject:"
+                android:text="@string/subject"
                 android:textColor="@color/textwhite"
                 android:textStyle="bold" />
 
@@ -43,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:text="Message:"
+                android:text="@string/message"
                 android:textColor="@color/textwhite"
                 android:textStyle="bold" />
 

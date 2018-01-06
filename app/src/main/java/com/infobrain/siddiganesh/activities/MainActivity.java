@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.activities;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -50,44 +48,32 @@ public class MainActivity extends AppCompatActivity {
     private CheckBox checkBox;
     private String user_number;
     private String user_mpin;
-    private String acc_nos;
     private String login_url;
-    private String account_type;
     private String list_value, only_acc_no;
     private String loaded_number;
     private Boolean checkBoxValue;
     private String state = "1";
-    private String boolbool;
     private String push_url;
     private int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
 
-    private List<String> account_no_list = new ArrayList<>();
-    private List<String> account_nos_only = new ArrayList<>();
-    //private String login_url = "http://192.168.0.104:81/BloodHub/login.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        push_url = "http://www.lifespassenger.com/siddhiganesh/fcm_insert.php";
+        push_url = "..........................";
         preferences = getSharedPreferences("LOGIN", 0);
         checkpref = getSharedPreferences("CHECK", 0);
-        login_btn = (Button) findViewById(R.id.login_btn);
-        user_mobile = (EditText) findViewById(R.id.user_mobile_no);
-        mpin = (EditText) findViewById(R.id.user_pass);
-        brain_info_call = (TextView) findViewById(R.id.info_phone);
-        brain_info_info = (TextView) findViewById(R.id.info_info);
-        checkBox = (CheckBox) findViewById(R.id.check_remember);
-       /* loaded_number =checkpref.getString("user_number", "");*/
+        login_btn = findViewById(R.id.login_btn);
+        user_mobile = findViewById(R.id.user_mobile_no);
+        mpin = findViewById(R.id.user_pass);
+        brain_info_call = findViewById(R.id.info_phone);
+        brain_info_info = findViewById(R.id.info_info);
+        checkBox = findViewById(R.id.check_remember);
         checkBoxValue = checkpref.getBoolean("CheckBox_Value", false);
         loaded_number = preferences.getString("user_number", "");
-        /*Log.e("Checkbox",checkBoxValue);
-        if (checkBoxValue.equals("1")) {
-            loadNumber();
-        }else {
-            user_mobile.setText("");
-        }*/
+
         loadNumber(checkBoxValue);
         brain_info_call.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,41 +95,13 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-             /*   Intent callIntent = new Intent(Intent.ACTION_CALL);
-                callIntent.setData(Uri.parse("tel:" + "9849915378"));
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                    startActivity(callIntent);
-                } else {
-
-                }
-                startActivity(callIntent);*/
-
-
             }
         });
         brain_info_info.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),infobrainProfile.class);
+                Intent i = new Intent(getApplicationContext(), infobrainProfile.class);
                 startActivity(i);
-           /*     AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-
-                LayoutInflater inflater = MainActivity.this.getLayoutInflater();
-                View dialogView = inflater.inflate(R.layout.infobrain_profile, null);
-                builder.setTitle("Booking Confirm");
-                builder.setView(dialogView);
-                final AlertDialog dialog = builder.create();
-
-                Button btn_confirm=(Button)dialogView.findViewById(R.id.btn_confirm);
-                btn_confirm.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        dialog.dismiss();
-                    }
-                });
-
-                dialog.show();*/
-
             }
         });
 
@@ -153,11 +111,11 @@ public class MainActivity extends AppCompatActivity {
                 progressDialog = new ProgressDialog(MainActivity.this);
                 progressDialog.setMessage("Please Wait...");
                 progressDialog.setIndeterminate(true);
-                progressDialog.setCancelable(false);
+                progressDialog.setCancelable(true);
                 progressDialog.show();
                 user_number = String.valueOf(user_mobile.getText());
                 user_mpin = String.valueOf(mpin.getText());
-                login_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Validate_UserLogin?Mobile_No=" + user_number + "&MPin=" + user_mpin;
+                login_url = "................" + user_number + "&MPin=" + user_mpin;
                 //Toast.makeText(MainActivity.this, login_url, Toast.LENGTH_SHORT).show();
                 if (!checkValidation()) {
                     progressDialog.dismiss();
@@ -241,34 +199,10 @@ public class MainActivity extends AppCompatActivity {
                /* progressDialog.dismiss();*/
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    // JSONArray array2 = jsonObject.getJSONArray("Table1");
                     JSONArray array = jsonObject.getJSONArray("Table");
-
-                    // JSONArray array1 = jsonObject.getJSONArray("Table2");
                     JSONObject contain = array.getJSONObject(0);
                     String code = contain.getString("Response_Code");
                     String message = contain.getString("Message");
-                    //JSONObject info=array2.getJSONObject(1);
-                    /*for (int i = 0; i < array1.length(); i++) {
-                        JSONObject object = array1.getJSONObject(i);
-                        acc_nos = object.getString("AC_NO");
-                        account_type = object.getString("AC_TYPE");
-                        account_no_list.add(acc_nos + "--" + account_type);
-                        account_nos_only.add(acc_nos);
-                    }*/
-
-                   /* list_value = String.valueOf(account_no_list);
-                    only_acc_no = String.valueOf(account_nos_only);*/
-                   /* SharedPreferences.Editor editor = preferences.edit();
-                    editor.putString("user_number", user_number);
-                    editor.putString("user_mpin", user_mpin);
-                    editor.putString("list_value", list_value);
-                    editor.putString("acc_no_only", only_acc_no);
-                    editor.commit();*/
-
-                    /*String phone_number=info.getString("MOBILE_NO");
-                    String userName=info.getString("FULL_NAME");
-                    String userAddress=info.getString("ADDRESS");*/
                     if (code.equals("100")) {
                         Intent intent = new Intent(getApplicationContext(), Siddhi_Nav_Drawer.class);
                         SharedPreferences.Editor editor = preferences.edit();
@@ -289,17 +223,8 @@ public class MainActivity extends AppCompatActivity {
                         progressDialog.dismiss();
                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
-
-                    // JSONArray array1=jsonObject.getJSONArray("Table1");
-
-                  /*  for (int i=0;i<array.length();i++){
-                        JSONObject contain=array.getJSONObject(i);
-                        JSONObject contain1 = array.getJSONObject(i);
-
-                    }*/
                 } catch (JSONException e) {
                     Log.e("ERROR:", e.getMessage());
-//                    progressDialog.dismiss();
 
 
                 }
@@ -310,25 +235,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
+                Toast.makeText(MainActivity.this, "No Internet!", Toast.LENGTH_SHORT).show();
+
             }
         }) {
-
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
 
-    }
-
-    public void success_Login() {
-        Intent intent = new Intent(getApplicationContext(), Siddhi_Nav_Drawer.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void savePassword() {
-        String user_phone_number;
-        String user_mpin;
     }
 
     public boolean checkValidation() {

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:padding="16dp"
-    tools:context="com.infobrain.siddiganesh.activities.infobrainProfile">
+    tools:context="">
 
     <ImageView
         android:id="@+id/info_brain_logo"
@@ -20,7 +20,7 @@
         android:layout_below="@id/info_brain_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Namaste,"
+        android:text="@string/Namaste"
         android:textColor="#037ABC"
         android:textStyle="bold"
         android:textSize="18sp"/>
@@ -48,7 +48,7 @@
         android:id="@+id/follow_us"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Follow us on:"
+        android:text="@string/Follow"
         android:textSize="18dp"
         android:textColor="#037ABC"
         android:layout_below="@+id/line"

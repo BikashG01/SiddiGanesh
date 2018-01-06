@@ -109,7 +109,6 @@
                 android:id="@+id/loan_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_marginLeft="15dp"
                 android:text="@string/loan_acc"
                 android:textColor="#F7E812"

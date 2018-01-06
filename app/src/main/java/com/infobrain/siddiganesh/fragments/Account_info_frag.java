@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.fragments;
-
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.support.v4.app.Fragment;
@@ -23,6 +21,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.infobrain.siddiganesh.R;
+import com.infobrain.siddiganesh.activities.MainActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +30,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by bikas on 12/3/2017.
@@ -42,15 +43,15 @@ public class Account_info_frag extends Fragment {
     private String user_number;
     private String user_mpin;
     private String acc_no, account_type;
-    String exact_no;
+    private String exact_no;
     private String list_value, acc_no_only, account_name;
     private String user_acc_no;
     private Spinner acc_no_spin;
-    List<String> items = new ArrayList<>();
+    private List<String> items = new ArrayList<>();
     private List<String> account_no_list;
     private List<String> account_no_lists;
     private ProgressDialog progressDialog;
-    private String PRODUCTNAME, DURATION, OPENING_DATE, MATURED_DATE, INT_RATE, MIN_BAL, STATUS, ACC_BRANCH, PRINICPAL_BAL, INT_TYPE, FINE_PENALTY, LIMIT_AMT, INT_BAL,INT_SCHEME;
+    private String PRODUCTNAME, DURATION, OPENING_DATE, MATURED_DATE, INT_RATE, MIN_BAL, STATUS, ACC_BRANCH, PRINICPAL_BAL, INT_TYPE, FINE_PENALTY, LIMIT_AMT, INT_BAL, INT_SCHEME;
     private ArrayList<String> acc_list = new ArrayList<String>();
     private String[] mStringArray;
     private String rs = "Rs. ";
@@ -70,21 +71,29 @@ public class Account_info_frag extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                progressDialog.dismiss();
+
+                t.cancel();
+
+            }
+        }, 3300);
         account_no_lists = new ArrayList<>();
-        acc_no_spin = (Spinner) view.findViewById(R.id.account_no_spin);
-        fine_and_penalty_layout = (LinearLayout) view.findViewById(R.id.fine_and_penalty_layout);
-
-        interest_type_layout = (LinearLayout) view.findViewById(R.id.interest_type_layout);
-        interest_blc_layout = (LinearLayout) view.findViewById(R.id.interest_blc_layout);
-        installment_type_layout = (LinearLayout) view.findViewById(R.id.installment_type_layout);
-        min_blc_layout = (LinearLayout) view.findViewById(R.id.min_blc_layout);
-        limit_amount_layout = (LinearLayout) view.findViewById(R.id.limit_amount_layout);
-
-
-
-
-
-
+        acc_no_spin = view.findViewById(R.id.account_no_spin);
+        fine_and_penalty_layout = view.findViewById(R.id.fine_and_penalty_layout);
+        interest_type_layout = view.findViewById(R.id.interest_type_layout);
+        interest_blc_layout = view.findViewById(R.id.interest_blc_layout);
+        installment_type_layout = view.findViewById(R.id.installment_type_layout);
+        min_blc_layout = view.findViewById(R.id.min_blc_layout);
+        limit_amount_layout = view.findViewById(R.id.limit_amount_layout);
         acc_no_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -95,9 +104,6 @@ public class Account_info_frag extends Fragment {
                 account_type = parts[1];
                 layoutControl(account_type);
                 load_account(exact_no);
-
-                Toast.makeText(getContext(), exact_no, Toast.LENGTH_SHORT).show();
-
                 ((TextView) acc_no_spin.getSelectedView()).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             }
 
@@ -106,7 +112,7 @@ public class Account_info_frag extends Fragment {
             }
         });
         preferences = this.getActivity().getSharedPreferences("LOGIN", 0);
-        product_name = (TextView) view.findViewById(R.id.product_name);
+        product_name = view.findViewById(R.id.product_name);
         opening_date = (TextView) view.findViewById(R.id.opening_date);
         duration = (TextView) view.findViewById(R.id.duration);
         matured_date = (TextView) view.findViewById(R.id.matured_date);
@@ -141,7 +147,7 @@ public class Account_info_frag extends Fragment {
     }
 
     public void spinner_load() {
-        final String login_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Validate_UserLogin?Mobile_No=" + user_number + "&MPin=" + user_mpin;
+        final String login_url = "............................" + user_number + "&MPin=" + user_mpin;
         final StringRequest stringRequest2 = new StringRequest(Request.Method.GET, login_url, new Response.Listener<String>() {
 
             @Override
@@ -175,6 +181,7 @@ public class Account_info_frag extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), "No Internet!", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -186,14 +193,8 @@ public class Account_info_frag extends Fragment {
 
 
     public void load_account(String accNo) {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Please Wait...");
-        progressDialog.setIndeterminate(true);
-        progressDialog.setCancelable(true);
-        progressDialog.show();
 
-        final String ACC_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Get_Accounts_Info?Mobile_No=" + user_number + "&" + "MPin=" + user_mpin + "&Acc_No=" + accNo;
-        Toast.makeText(getContext(), ACC_URL, Toast.LENGTH_SHORT).show();
+        final String ACC_URL = "...................." + user_number + "&" + "MPin=" + user_mpin + "&Acc_No=" + accNo;
         final StringRequest stringRequest = new StringRequest(Request.Method.GET, ACC_URL, new Response.Listener<String>() {
 
             @Override
@@ -204,33 +205,22 @@ public class Account_info_frag extends Fragment {
                     JSONArray array = jsonObject.getJSONArray("Table1");
                     JSONObject contain = array.getJSONObject(0);
                     PRODUCTNAME = contain.getString("PRODUCT_NAME");
-                    Log.e("PRODUCT NAME", PRODUCTNAME);
                     DURATION = contain.getString("PERIOD");
-                    Log.e("DURATION", DURATION);
                     OPENING_DATE = contain.getString("OPEN_DATE");
                     INT_RATE = contain.getString("INT_RATE");
                     String split = "T";
                     String[] part1 = OPENING_DATE.split(split);
                     INT_TYPE = contain.getString("INST_TYPE");
                     LIMIT_AMT = contain.getString("LIMIT_AMT");
-
-                    Log.e("OPENING DATE", OPENING_DATE);
                     MATURED_DATE = contain.getString("EXPIRY_DATE");
                     part2 = MATURED_DATE.split(split);
-                    Log.e("MATURED DATE",part2[0].toString());
-                    //String[] part2 = MATURED_DATE.split(split);
-                    Log.e("EXPIRY DATE", MATURED_DATE);
                     MIN_BAL = contain.getString("MIN_BAL");
-                    Log.e("MIN_BAL", MIN_BAL);
                     STATUS = contain.getString("AC_STATUS");
-                    Log.e("AC_STATUS", STATUS);
                     ACC_BRANCH = contain.getString("BRANCH");
                     PRINICPAL_BAL = contain.getString("Prn_Bal");
                     FINE_PENALTY = contain.getString("Fine");
                     INT_BAL = contain.getString("Int_Bal");
-                    INT_SCHEME=contain.getString("INT_SCHEME");
-
-
+                    INT_SCHEME = contain.getString("INT_SCHEME");
                     product_name.setText(PRODUCTNAME);
                     opening_date.setText(part1[0]);
                     duration.setText(DURATION);
@@ -246,14 +236,8 @@ public class Account_info_frag extends Fragment {
                     fine_penalty.setText(rs + FINE_PENALTY);
                     acc_branch.setText(ACC_BRANCH);
                     check();
-                    progressDialog.dismiss();
-
-
                 } catch (JSONException e) {
                     Log.e("ERROR", e.getMessage());
-                    progressDialog.dismiss();
-
-
                 }
 
 
@@ -261,13 +245,10 @@ public class Account_info_frag extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
-
-
     }
 
     public void check() {
@@ -287,27 +268,6 @@ public class Account_info_frag extends Fragment {
             interest_type_layout.setVisibility(View.VISIBLE);
             installment_type_layout.setVisibility(View.VISIBLE);
         }
-        /*if (MIN_BAL.isEmpty() || MIN_BAL.equals(null)) {
-            min_blc.setVisibility(View.GONE);
-        } else {
-            min_blc.setText(MIN_BAL);
-        }
-        if (INT_TYPE.isEmpty() || INT_TYPE.equals("0.00")) {
-            interest_type_layout.setVisibility(View.GONE);
-            interest_blc_layout.setVisibility(View.GONE);
-        } else {
-            interest_type.setText(INT_TYPE);
-            interest_type_layout.setVisibility(View.VISIBLE);
-            interest_blc_layout.setVisibility(View.VISIBLE);
-        }
-        if (FINE_PENALTY.isEmpty() || FINE_PENALTY.equals(0.00)) {
-            fine_and_penalty_layout.setVisibility(View.GONE);
-        } else {
-            fine_penalty.setText(FINE_PENALTY);
-            fine_and_penalty_layout.setVisibility(View.VISIBLE);
-
-        }*/
-
 
     }
 
@@ -323,8 +283,19 @@ public class Account_info_frag extends Fragment {
 
         } else {
             Log.e("ACCOUNT TYPE", account_type);
-            fine_and_penalty_layout.setVisibility(View.VISIBLE);
+
+            float mPos1x, mPos1y,offset;
+
+            mPos1x = min_blc_layout.getX()+10;
+            mPos1y = min_blc_layout.getY();
+
+            offset = min_blc_layout.getHeight()*6+50;
+
             min_blc_layout.setVisibility(View.GONE);
+
+            fine_and_penalty_layout.setX(mPos1x);
+            fine_and_penalty_layout.setY(mPos1y+offset);
+            fine_and_penalty_layout.setVisibility(View.VISIBLE);
             interest_type_layout.setVisibility(View.VISIBLE);
             interest_blc_layout.setVisibility(View.VISIBLE);
             limit_amount_layout.setVisibility(View.VISIBLE);

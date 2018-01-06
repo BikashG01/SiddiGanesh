@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.fragments;
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -17,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -37,13 +34,13 @@ import org.json.JSONObject;
  */
 
 public class Change_password_frag extends Fragment {
-    String change_password_url,phone;
+    String change_password_url, phone;
     EditText old_pass, new_pass, confirm_pass;
     Button confirm_btn;
     String old_password;
     String new_password;
     String confirm_password;
-    SharedPreferences get_phone,preferences;
+    SharedPreferences get_phone, preferences;
     ProgressDialog progressDialog;
 
     @Override
@@ -51,10 +48,10 @@ public class Change_password_frag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         preferences = getActivity().getSharedPreferences("LOGIN", 0);
         phone = preferences.getString("user_number", "");
-        old_pass = (EditText) view.findViewById(R.id.old_password);
-        new_pass = (EditText) view.findViewById(R.id.new_password);
-        confirm_pass = (EditText) view.findViewById(R.id.confirm_password);
-        confirm_btn = (Button) view.findViewById(R.id.confirm_btn);
+        old_pass = view.findViewById(R.id.old_password);
+        new_pass = view.findViewById(R.id.new_password);
+        confirm_pass = view.findViewById(R.id.confirm_password);
+        confirm_btn = view.findViewById(R.id.confirm_btn);
         confirm_btn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
@@ -77,11 +74,10 @@ public class Change_password_frag extends Fragment {
                                     progressDialog.setIndeterminate(true);
                                     progressDialog.setCancelable(false);
                                     progressDialog.show();
-                                    //http://inet.siddiganesh.com.np/services/webservice.asmx/Change_MPin?Mobile_No=9851132290&Old_MPin=1234&New_Mpin=2345
 
-                                    change_password_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Change_MPin?Mobile_No="+phone+"&Old_MPin="+old_password+"&New_Mpin="+new_password;
+                                    change_password_url = "................" + phone + "&Old_MPin=" + old_password + "&New_Mpin=" + new_password;
                                     change_password(change_password_url);
-                                    Log.e("CHANGE PASSWORD URL",change_password_url);
+                                    Log.e("CHANGE PASSWORD URL", change_password_url);
                                     startActivity(intent);
                                     startActivity(intent);
                                 }
@@ -140,43 +136,37 @@ public class Change_password_frag extends Fragment {
         return check_flag;
     }
 
-    public void change_password(String URL){
+    public void change_password(String URL) {
         /*final ProgressDialog progressDialog=  new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();*/
         change_password_url = URL;
 
-        final StringRequest stringRequest=new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
+        final StringRequest stringRequest = new StringRequest(Request.Method.GET, URL, new Response.Listener<String>() {
 
             @Override
             public void onResponse(String response) {
 //                progressDialog.dismiss();
-                try{
-                    JSONObject jsonObject= new JSONObject(response);
-                    JSONArray array=jsonObject.getJSONArray("Table");
-                    JSONObject contain=array.getJSONObject(0);
-                    String code=contain.getString("Response_Code");
-                    String message=contain.getString("Message");
-                    if (code.equals("100")){
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array = jsonObject.getJSONArray("Table");
+                    JSONObject contain = array.getJSONObject(0);
+                    String code = contain.getString("Response_Code");
+                    String message = contain.getString("Message");
+                    if (code.equals("100")) {
                         Toast.makeText(getContext(), "Password changed successfully", Toast.LENGTH_LONG).show();
-                        Intent intent= new Intent(getContext(),MainActivity.class);
+                        Intent intent = new Intent(getContext(), MainActivity.class);
                         progressDialog.dismiss();
                         startActivity(intent);
 
-                    }else if (code.equals("101")){
+                    } else if (code.equals("101")) {
                         progressDialog.dismiss();
                         Toast.makeText(getContext(), "Invalid Old Pin", Toast.LENGTH_LONG).show();
                     }
 
-                    // JSONArray array1=jsonObject.getJSONArray("Table1");
-
-                  /*  for (int i=0;i<array.length();i++){
-                        JSONObject contain=array.getJSONObject(i);
-                        JSONObject contain1 = array.getJSONObject(i);
-
-                    }*/
-                }catch (JSONException e){
-                    Log.e("ERROR:",e.getMessage());
+            
+                } catch (JSONException e) {
+                    Log.e("ERROR:", e.getMessage());
 //                    progressDialog.dismiss();
 
 
@@ -189,12 +179,11 @@ public class Change_password_frag extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        })
-        {
+        }) {
 
         };
-        RequestQueue requestQueue= Volley.newRequestQueue(getContext());
-        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000,DefaultRetryPolicy.DEFAULT_MAX_RETRIES,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(stringRequest);
 
     }

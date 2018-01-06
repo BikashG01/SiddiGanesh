@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.push_notification;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -8,9 +6,6 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.infobrain.siddiganesh.R;
 
 
-/**
- * Created by rp on 8/6/17.
- */
 
 public class FcmInstanceIdService extends FirebaseInstanceIdService {
 

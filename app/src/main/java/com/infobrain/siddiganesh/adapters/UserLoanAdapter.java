@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.adapters;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,9 +11,6 @@ import com.infobrain.siddiganesh.data_model.UserLoanDataModel;
 
 import java.util.List;
 
-/**
- * Created by frank on 12/3/2017.
- */
 
 public class UserLoanAdapter extends BaseAdapter {
     List<UserLoanDataModel> userLoanDataModels;

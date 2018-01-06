@@ -1,5 +1,3 @@
-package com.infobrain.siddiganesh.fragments;
-
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -33,7 +31,7 @@ import org.json.JSONObject;
  */
 
 public class Feedback_frag extends Fragment {
-    String sub, msg, post_feedback_url,post_feedbak_url;
+    String sub, msg, post_feedback_url, post_feedbak_url;
     EditText subject, message;
     SharedPreferences preferences;
     Button feedback_send_btn;
@@ -53,7 +51,7 @@ public class Feedback_frag extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        subject = (EditText) view.findViewById(R.id.feedback_subject);
+        subject = view.findViewById(R.id.feedback_subject);
         message = view.findViewById(R.id.feedback_message);
         feedback_send_btn = view.findViewById(R.id.send_feedback_btn);
         preferences = getActivity().getSharedPreferences("LOGIN", 0);
@@ -78,11 +76,10 @@ public class Feedback_frag extends Fragment {
                     progressDialog.setIndeterminate(true);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
-                    post_feedback_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Post_Feedback_Message?Mobile_No=" + userPhoneNo + "&MPin=" + userMpin + "&Subject=" + sub + "&Message=" + msg;
-//                    post_feedback_url = "http://inet.siddiganesh.com.np/services/webservice.asmx/Post_Feedback_Message?Mobile_No="+phone+"&MPin="+pin+"&Subject="+sub+"&Message="+msg;
-                    post_feedbak_url = post_feedback_url.replaceAll(" ", "+"+"%20"+"+");
+                    post_feedback_url = "......................" + userPhoneNo + "&MPin=" + userMpin + "&Subject=" + sub + "&Message=" + msg;
+                    post_feedbak_url = post_feedback_url.replaceAll(" ", "+" + "%20" + "+");
                     Log.e("URL", post_feedback_url);
-                    Log.e("POST",post_feedbak_url);
+
                     post_feedback(post_feedbak_url);
                     //Log.e("Inside call",phone);
                 }

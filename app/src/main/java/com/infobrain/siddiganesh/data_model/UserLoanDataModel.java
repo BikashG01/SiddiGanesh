@@ -1,9 +1,3 @@
-package com.infobrain.siddiganesh.data_model;
-
-/**
- * Created by frank on 12/3/2017.
- */
-
 public class UserLoanDataModel {
 
     String loan_account_type, loan_account_number, loan_account_total_amount_principal,loan_interest_amount,loan_fine_amount;

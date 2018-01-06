@@ -1,11 +1,8 @@
-package com.infobrain.siddiganesh.fragments;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -43,9 +40,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import static android.view.View.VISIBLE;
@@ -55,81 +53,72 @@ public class Account_Statements_frag extends Fragment {
     private Button show_statement;
     private LinearLayout linearLayout_stat_list;
     private Spinner statment_type_spin, account_type_spin;
-    private String statement_value, acc_no;
+    private String acc_no;
+    private String statement_value = "PRN";
     private ListView statement_list_view;
     private ArrayList statment_value_list = new ArrayList();
     private String SHOWS_URL;
-    Double opening_bal;
+    private Double opening_bal;
     private List<Statment_data_model> statment_data_models = new ArrayList<>();
     private Statment_adapter statment_adapters;
     private int year, month, day;
     private int fyear, fmonth, fday;
     private Calendar calendar1, calendar2;
     private String fromDate, toDate = "0";
-    private TextView from_date, to_date;
+    private TextView from_date, to_date,empty_txt;
     private TextView open_bal;
     private List<String> account_no_lists;
-    private String account_name;
-    private SimpleDateFormat sdf;
     private String user_number;
     private String user_mpin;
+    private String status = "0";
     private SharedPreferences preferences;
-
-    LinearLayout show_opening_bal;
-
-
+    private LinearLayout show_opening_bal;
     private ArrayAdapter<CharSequence> statement_adapater;
-
-    String date, desc, transaction_balance;
-
-    Double total_balance, cr_amt, dr_amt, dr_cr_amt;
-
+    private String date, desc, transaction_balance;
+    private Double total_balance, cr_amt, dr_amt, dr_cr_amt;
     private Double total_balance_main;
-
-    String main_date_eng;
-
-    String status;
+    private String main_date_eng;
+    private ProgressDialog progressDialog;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Please Wait...");
+        progressDialog.setIndeterminate(true);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                progressDialog.dismiss();
+
+                t.cancel();
+
+            }
+        }, 3300);
+
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        statment_type_spin = (Spinner) view.findViewById(R.id.statement_type);
-        account_type_spin = (Spinner) view.findViewById(R.id.account_spin);
+        statment_type_spin = view.findViewById(R.id.statement_type);
+        account_type_spin = view.findViewById(R.id.account_spin);
         account_no_lists = new ArrayList<>();
-        statement_list_view = (ListView) view.findViewById(R.id.list_statement);
-        show_statement = (Button) view.findViewById(R.id.show_statement_btn);
-        linearLayout_stat_list = (LinearLayout) view.findViewById(R.id.list_layout);
-        from_date = (TextView) view.findViewById(R.id.frm_date);
-        to_date = (TextView) view.findViewById(R.id.to_date);
-        /*Bundle args = getArguments();
-        String status = args.getString("Status");
-        Log.e("STATUS passeed", status);
-        String data = args.getString("Deposit_no");
-        if (status.equals("1")) {
-            linearLayout_stat_list.setVisibility(VISIBLE);
-            load_statements();
-        }*/
+        statement_list_view = view.findViewById(R.id.list_statement);
+        show_statement = view.findViewById(R.id.show_statement_btn);
+        linearLayout_stat_list = view.findViewById(R.id.list_layout);
+        from_date = view.findViewById(R.id.frm_date);
+        to_date = view.findViewById(R.id.to_date);
+
         statment_adapters = new Statment_adapter(statment_data_models, getContext());
-        //statement_list_view.setAdapter(new Statment_adapter(statment_value_list, getContext()));
         statement_adapater = ArrayAdapter.createFromResource(getContext(), R.array.statement, android.R.layout.simple_spinner_item);
         statement_adapater.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         statment_type_spin.setAdapter(statement_adapater);
-
         show_opening_bal = view.findViewById(R.id.show_opening_balance);
         open_bal = view.findViewById(R.id.opening_balance);
-
-
         preferences = getActivity().getSharedPreferences("LOGIN", 0);
         user_number = preferences.getString("user_number", "");
         user_mpin = preferences.getString("user_mpin", "");
-
-
         spinner_load();
-
-
         Date currentDate = new Date();
-
         calendar1 = Calendar.getInstance();
         year = calendar1.get(Calendar.YEAR);
         month = calendar1.get(Calendar.MONTH);
@@ -143,13 +132,9 @@ public class Account_Statements_frag extends Fragment {
 
         //calendar2 = Calendar.getInstance();
         calendar2.setTime(currentDate);
-        //fyear = calendar2.get(Calendar.YEAR);
-        //fmonth = calendar2.get(Calendar.MONTH);
-        //fday=calendar2.get(Calendar.DAY_OF_MONTH);
         calendar2.add(Calendar.DAY_OF_MONTH, -30);
         Date addDate = calendar2.getTime();
 
-        //olddate = fyear + "-" + new StringBuilder().append(fmonth+1) + "-" + fday;
         fromDate = dateFormat.format(addDate);
         String split = "-";
         String[] parts = fromDate.split(split);
@@ -158,8 +143,27 @@ public class Account_Statements_frag extends Fragment {
         fday = Integer.parseInt(parts[2]);
         from_date.setText(dateFormat.format(addDate));
         Log.e("SELECT NAHUDA KO DATE", fromDate);
+        try {
+            Bundle args = getArguments();
+            status = args.getString("Status");
+            Log.e("Passed Status", status);
+            acc_no = args.getString("AC_NO");
+            Log.e("Passed AC_NO", acc_no);
+        } catch (Exception ex) {
+
+        }
+
+        if (status.equals("1")) {
+            linearLayout_stat_list.setVisibility(VISIBLE);
+            statment_data_models.clear();
+            load_statements();
 
 
+            //statement_list_view = (ListView) view.findViewById(R.id.list_statement);
+            statment_adapters = new Statment_adapter(statment_data_models, getContext());
+            statement_list_view.setAdapter(statment_adapters);
+            statment_adapters.notifyDataSetChanged();
+        }
         to_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -204,7 +208,17 @@ public class Account_Statements_frag extends Fragment {
         statment_type_spin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                statement_value = statment_type_spin.getSelectedItem().toString();
+                String FirstStatement = statment_type_spin.getSelectedItem().toString();
+                if (FirstStatement.equals("Principal")) {
+                    statement_value = "PRN";
+                } else if (FirstStatement.equals("Interest")) {
+                    statement_value = "INT";
+
+                } else if (FirstStatement.equals("Fine & Penalty")) {
+                    statement_value = "FINE";
+
+                }
+
                 ((TextView) statment_type_spin.getSelectedView()).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             }
 
@@ -218,8 +232,6 @@ public class Account_Statements_frag extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 acc_no = account_type_spin.getItemAtPosition(i).toString();
 
-                Toast.makeText(getContext(), acc_no, Toast.LENGTH_SHORT).show();
-
                 ((TextView) account_type_spin.getSelectedView()).setTextColor(getResources().getColor(R.color.colorPrimaryDark));
             }
 
@@ -228,8 +240,6 @@ public class Account_Statements_frag extends Fragment {
             }
         });
 
-
-        //Log.e("ADD DATE", addDate);
     }
 
     public void showDateFrom() {
@@ -245,8 +255,6 @@ public class Account_Statements_frag extends Fragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, fyear, fmonth, fday);
-            //dialog.getDatePicker().setMinDate(calendar2.getTimeInMillis());
-            //dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             return dialog;
         }
 
@@ -257,11 +265,7 @@ public class Account_Statements_frag extends Fragment {
             fromDate = fyear + "-" + new StringBuilder().append(fmonth + 1) + "-" + fday;
             Log.e("FROM SELECT GARDA", fromDate);
             from_date.setText(fromDate);
-            /*from_date.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));*/
         }
-
 
     }
 
@@ -275,7 +279,6 @@ public class Account_Statements_frag extends Fragment {
             return 0;
         }
     }
-
 
     public void ToDateDatePicker() {
         DialogFragment dialogFragments = new SelectDateFragments();
@@ -302,9 +305,6 @@ public class Account_Statements_frag extends Fragment {
             toDate = year + "-" + new StringBuilder().append(month + 1) + "-" + day;
             Log.e("TO SELECT GARDA", toDate);
             to_date.setText(toDate);
-            /*from_date.setText(new StringBuilder().append(month + 1)
-                    .append("-").append(day).append("-").append(year)
-                    .append(" "));*/
         }
 
 
@@ -323,7 +323,8 @@ public class Account_Statements_frag extends Fragment {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        SHOWS_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Get_Accounts_Statement?Mobile_No=9856022323&MPin=1234&Acc_No=0037NS&Date1=2017-11-06&Date2=2017-12-05&Statement_Type=PRN";
+        SHOWS_URL = "http://inet.siddiganesh.com.np/services/webservice.asmx/Get_Accounts_Statement?Mobile_No=" + user_number + "&MPin=" + user_mpin + "&Acc_No=" + acc_no + "&Date1=" + fromDate + "&Date2=" + toDate + "&Statement_Type=" + statement_value;
+        Log.e("STATEMENT URL", SHOWS_URL);
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, SHOWS_URL, new Response.Listener<String>() {
 
@@ -368,8 +369,9 @@ public class Account_Statements_frag extends Fragment {
                         }
 
                         Statment_data_model stat_dataModel = new Statment_data_model(main_date_eng, String.valueOf(total_balance_main.floatValue()), status, String.valueOf(dr_amt), desc, String.valueOf(dr_cr_amt));
+                        //Collections.reverse(statment_data_models);
                         statment_data_models.add(stat_dataModel);
-                        //Toast.makeText(MainActivity.this, String.valueOf(model.add(data_data)), Toast.LENGTH_SHORT).show();
+
                     }
                     if (statment_data_models != null) {
                         progressDialog.dismiss();
@@ -380,6 +382,7 @@ public class Account_Statements_frag extends Fragment {
                     Log.e("ERROR:", e.getMessage());
                     progressDialog.dismiss();
                 }
+
                 statment_adapters.notifyDataSetChanged();
 
 
@@ -387,7 +390,7 @@ public class Account_Statements_frag extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //Toast.makeText(BusActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No Internet!", Toast.LENGTH_SHORT).show();
                 progressDialog.dismiss();
 
             }
@@ -408,7 +411,6 @@ public class Account_Statements_frag extends Fragment {
 
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray array1 = jsonObject.getJSONArray("Table2");
-                    JSONObject contain = array1.getJSONObject(0);
 
                     for (int i = 0; i < array1.length(); i++) {
                         JSONObject object = array1.getJSONObject(i);
@@ -418,15 +420,9 @@ public class Account_Statements_frag extends Fragment {
 
                     }
                     account_type_spin.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, account_no_lists));
-
-
                 } catch (JSONException e) {
                     Log.e("ERROR:", e.getMessage());
-
-
                 }
-
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -436,7 +432,5 @@ public class Account_Statements_frag extends Fragment {
         });
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest2);
-
-
     }
 }
